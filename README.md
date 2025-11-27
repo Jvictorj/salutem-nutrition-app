@@ -34,15 +34,16 @@
 
 | Boas-Vindas | Registro | Login |
 |------------|----------|-------|
-| ![](https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/welcome.png?raw=true) | ![](https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/register.png?raw=true) | ![](https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/login.png?raw=true) |
+| <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/welcome.png?raw=true" height="250"/> | <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/register.png?raw=true" height="250"/> | <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/login.png?raw=true" height="250"/> |
 
 | Tela Principal | Informações Nutricionais (Resumo) | Informações Nutricionais (Alimentos) |
 |----------------|------------------------------------|----------------------------------------|
-| ![](https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/Home.png?raw=true) | ![](https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/nutriente-track%20-%20(Resumo).png?raw=true) | ![](https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/nutriente-track%20-%20(Informações).png?raw=true) |
+| <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/Home.png?raw=true" height="250"/> | <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/nutriente-track%20-%20(Resumo).png?raw=true" height="250"/> | <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/nutriente-track%20-%20(Informações).png?raw=true" height="250"/> |
 
 | Tela de Exercícios | IMC | Perfil |
 |--------------------|-----|--------|
-| ![](https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/page-exercicio.png?raw=true) | ![](https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/IMC.png?raw=true) | ![](https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/Perfil.png?raw=true) |
+| <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/page-exercicio.png?raw=true" height="250"/> | <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/IMC.png?raw=true" height="250"/> | <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/Perfil.png?raw=true" height="250"/> |
+
 
 ## 🎯 Objetivos do Projeto
 
