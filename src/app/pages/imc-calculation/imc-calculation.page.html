@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Cálculo de IMC</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="content-container">
+    <h1>Calculadora de IMC</h1>
+    <p>
+      Com as suas informações abaixo vamos calcular o seu IMC e verificar o Peso ideal.
+    </p>
+
+    <!-- Dados do Usuário -->
+    <ion-item>
+      <ion-label>Peso (kg): <strong>{{ peso }}</strong></ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Altura (cm): <strong>{{ altura }}</strong></ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Idade: <strong>{{ idade }} anos</strong></ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Sexo: <strong>{{ sexo === 'male' ? 'Masculino' : 'Feminino' }}</strong></ion-label>
+    </ion-item>
+
+    <!-- Peso Ideal -->
+    <ion-item>
+      <ion-label>Peso Ideal: <strong>{{ pesoIdeal | number:'1.0-2' }} kg</strong></ion-label>
+    </ion-item>
+
+    <!-- Resultado -->
+    <div class="resultado" *ngIf="resultadoIMC">
+      <h3>Resultado:</h3>
+      <!-- Classificação -->
+      <p>IMC: <span class="highlight">{{ resultadoIMC.imc | number: '1.1-1' }}</span></p>
+      <p class="classificacao {{ obterClassificacaoCor(resultadoIMC?.classificacao || 'classificacao-normal') }}">
+        Classificação: <span class="highlight">{{ resultadoIMC.classificacao }}</span>
+      </p>
+      <!-- Feedback -->
+      <p class="feedback {{ obterClasseFeedback(resultadoIMC?.classificacao || 'feedback-normal') }}">
+        {{ resultadoMensagem }}
+      </p>
+    </div>
+
+    <!-- Botão para calcular -->
+    <ion-button expand="full" (click)="calcularIMC()">Calcular IMC</ion-button>
+  </div>
+</ion-content>

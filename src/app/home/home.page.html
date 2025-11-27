@@ -1,20 +1,113 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title  color="secondary">
+      Bem-vindo, {{ userName }}
     </ion-title>
+    <ion-buttons (click)="goToProfile()" slot="end">
+      <!-- Avatar -->
+      <ion-avatar class="user-avatar">
+        <ion-img [src]="avatarUrl"></ion-img>
+      </ion-avatar>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<!-- Seletor de Dias -->
+<ion-segment class="day-selector" [(ngModel)]="selectedDay">
+  <ion-segment-button *ngFor="let day of weekDays" [value]="day.value" (click)="selectDay(day)">
+    <ion-label>{{ day.label }}</ion-label>
+  </ion-segment-button>
+</ion-segment>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+
+<ion-content class="home-page">
+
+  <!-- Progresso do Usuário -->
+  <ion-card class="progress-card">
+    <ion-card-header>
+      <ion-card-title>Seu Plano Para Hoje</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="progress-info">
+        <div class="progress-item">
+          <ion-icon name="heart-outline" slot="start"></ion-icon>
+          <p>Calorias <br> Consumidas</p>
+          <h2>350 kcal</h2>
+        </div>
+        <div class="progress-item">
+          <ion-icon name="walk-outline" slot="start"></ion-icon>
+          <p>Passos</p>
+          <h2>5,000</h2>
+        </div>
+        <div class="progress-item">
+          <ion-icon name="barbell-outline" slot="start"></ion-icon>
+          <p>Exercícios</p>
+          <h2>30 min</h2>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Resumo de Calorias -->
+  <ion-card class="calorias-card">
+    <ion-card-header>
+      <ion-card-title>Resumo de Calorias</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="calorias-info">
+        <div class="calorias-item">
+          <p>Consumidas</p>
+          <h2 class="value">350 kcal</h2>
+        </div>
+        <div class="calorias-item">
+          <p>Ainda Consumir</p>
+          <h2 class="value">3964 kcal</h2>
+        </div>
+        <div class="calorias-item">
+          <p>Exercícios</p>
+          <h2 class="value">30 min</h2>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Dieta do Dia -->
+  <ion-card class="diet-card">
+    <ion-card-header>
+      <ion-card-title>Dieta do Dia</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>08:00</strong> - Café da manhã</p>
+      <p><strong>12:00</strong> - Almoço</p>
+      <p><strong>19:00</strong> - Jantar</p>
+      <ion-button expand="block" color="primary">Ver Mais</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Destaques -->
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+        <ion-card button (click)="goToExercicio()">
+          <ion-card-header>
+            <ion-card-title>Exercícios</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            Comece seu treino agora!
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card button (click)="goToNutriente()">
+          <ion-card-header>
+            <ion-card-title>Alimentos</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            Acompanhe sua ingestão de alimentos.
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
+

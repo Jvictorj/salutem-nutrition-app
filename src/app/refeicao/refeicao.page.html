@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Refeição</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let alimento of alimentos">
+      <ion-label>
+        <h2>{{ alimento.description }}</h2>
+        <p>{{ alimento.quantity }} {{ alimento.unit }}</p>
+        <p>Calorias: {{ alimento.energy_kcal | number:'1.0-2' }} kcal</p>
+        <p>Proteínas: {{ alimento.protein_g | number:'1.0-2' }} g</p>
+        <p>Carboidratos: {{ alimento.carbohydrate_g | number:'1.0-2' }} g</p>
+        <p>Gorduras: {{ alimento.lipid_g | number:'1.0-2' }} g</p>
+        <p>Fibras: {{ alimento.fiber_g | number:'1.0-2' }} g</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Exibir se não houver alimentos na refeição -->
+  <div *ngIf="alimentos.length === 0" class="no-results">
+    <p>Nenhum alimento adicionado à refeição ainda.</p>
+  </div>
+</ion-content>

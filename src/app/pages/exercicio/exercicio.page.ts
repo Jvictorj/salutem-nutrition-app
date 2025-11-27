@@ -1,12 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+<<<<<<< HEAD
 import { ExerciciosService } from '../../service/services/exercicios.service';
 
 @Component({
   selector: 'app-exercicio',
+=======
+import { YoutubeService } from '../../service/services/youtube.service'; // Certifique-se de que o caminho está correto
+
+@Component({
+  selector: 'app-exercicios',
+>>>>>>> final-V2
   templateUrl: './exercicio.page.html',
   styleUrls: ['./exercicio.page.scss'],
 })
 export class ExerciciosPage implements OnInit {
+<<<<<<< HEAD
   exercises: any[] = []; // Alterar para o tipo correto se você tiver uma interface
   videos: any[] = []; // Adicione seus vídeos aqui, se necessário
 
@@ -25,4 +33,22 @@ export class ExerciciosPage implements OnInit {
   // loadVideos() {
   //   // Lógica para buscar vídeos
   // }
+=======
+  videos: any[] = [];
+
+  constructor(private youtubeService: YoutubeService) {}
+
+  ngOnInit() {
+    const channelId = 'UCh__QxB4BrLCrw-Dp_SZh1g'; // Substitua pelo seu canal
+    this.youtubeService.getVideosFromChannel(channelId).subscribe(
+      (data: any) => {
+        this.videos = data.items;
+        console.log(this.videos);
+      },
+      (error) => {
+        console.error('Erro ao buscar vídeos:', error);
+      }
+    );
+  }
+>>>>>>> final-V2
 }

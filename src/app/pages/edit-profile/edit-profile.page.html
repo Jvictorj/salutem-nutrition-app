@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Editar Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-avatar slot="start">
+      <!-- Exibe a foto de perfil ou a padrão -->
+      <img [src]="profilePicture || 'assets/default-avatar.png'" alt="Profile Picture" />
+    </ion-avatar>
+
+    <!-- Botão para selecionar nova foto -->
+    <ion-button expand="block" (click)="selectImage()">Alterar Foto</ion-button>
+    
+    <!-- Input oculto para selecionar imagem -->
+    <input type="file" (change)="onFileSelected($event)" #fileInput hidden />
+  </ion-item>
+</ion-content>

@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Informações Nutricionais</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Campo de busca -->
+  <div class="search-container">
+    <ion-searchbar
+      placeholder="Pesquise um alimento..."
+      [(ngModel)]="searchQuery"
+      (ionInput)="onSearch()">
+    </ion-searchbar>
+  </div>
+
+  <!-- Lista de alimentos -->
+  <ion-list *ngIf="filteredAlimentos.length > 0">
+    <ion-item *ngFor="let alimento of filteredAlimentos">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{ alimento.description }}</ion-card-title>
+          <ion-card-subtitle>{{ alimento.category }}</ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+          <div class="nutriente-info">
+            <div class="info-item">
+              <ion-icon name="flame" color="danger"></ion-icon>
+              <span>Calorias: {{ alimento.energy_kcal | number:'1.0-2' }} kcal</span>
+            </div>
+            <div class="info-item">
+              <ion-icon name="barbell" color="success"></ion-icon>
+              <span>Proteínas: {{ alimento.protein_g | number:'1.0-2' }} g</span>
+            </div>
+            <div class="info-item">
+              <ion-icon name="pulse" color="tertiary"></ion-icon>
+              <span>Carboidratos: {{ alimento.carbohydrate_g | number:'1.0-2' }} g</span>
+            </div>
+            <div class="info-item">
+              <ion-icon name="nutrition" color="warning"></ion-icon>
+              <span>Gorduras: {{ alimento.lipid_g | number:'1.0-2' }} g</span>
+            </div>
+            <div class="info-item">
+              <ion-icon name="leaf" color="secondary"></ion-icon>
+              <span>Fibras: {{ alimento.fiber_g | number:'1.0-2' }} g</span>
+            </div>
+          </div>
+
+          
+          <!-- Ajuste de quantidade -->
+          <ion-item>
+            <ion-label>Quantidade:</ion-label>
+            <div class="quantity-container">
+              <ion-input
+                type="number"
+                [(ngModel)]="alimento.quantity"
+                (ionChange)="updateNutritionalValues(alimento)">
+              </ion-input>
+              <ion-label class="unit-label">{{ alimento.unit }}</ion-label>
+            </div>
+          </ion-item>
+
+          <!-- Botão para adicionar alimento à refeição -->
+          <ion-button expand="block" (click)="addToMeal(alimento)">
+            Adicionar à Refeição
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ion-item>
+  </ion-list>
+
+  <!-- Mensagem quando não há resultados -->
+  <div *ngIf="filteredAlimentos.length === 0 && searchQuery.trim() !== ''" class="no-results">
+    <p>Nenhum alimento encontrado para "{{ searchQuery }}".</p>
+  </div>
+</ion-content>

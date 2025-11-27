@@ -1,0 +1,31 @@
+<!-- src/app/components/receita-detail/receita-detail.component.html -->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ receita.title }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">Fechar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <img [src]="receita.image" alt="Receita Image" />
+    <ion-card-header>
+      <ion-card-title>Ingredientes</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ul>
+        <li *ngFor="let ingredient of receita.extendedIngredients">
+          {{ ingredient.original }}
+        </li>
+      </ul>
+    </ion-card-content>
+    <ion-card-header>
+      <ion-card-title>Instruções</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{ receita.instructions }}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

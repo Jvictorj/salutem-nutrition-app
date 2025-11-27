@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title color="secondary">Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- User Info -->
+  <div class="profile-header">
+    <ion-avatar slot="start">
+      <!-- Exibe a foto de perfil ou a padrão -->
+      <img [src]="profilePicture || 'assets/default-avatar.png'" alt="Profile Picture" />
+    </ion-avatar>
+    <ion-buttons slot="end">
+      <!-- Botão para alterar a foto de perfil -->
+      <input type="file" (change)="uploadProfileImage($event)" accept="image/*" style="display: none" #fileInput />
+      <ion-button (click)="fileInput.click()" fill="clear" size="small">
+        <ion-icon name="camera-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <div class="name">
+      <h2>{{ user.fullName || 'Nome do usuário' }}</h2>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-container">
+      <div class="stat-item">
+        <h3>{{ user?.height }}cm</h3>
+        <p>Altura</p>
+      </div>
+      <div class="stat-item">
+        <h3>{{ user?.weight }}kg</h3>
+        <p>Peso</p>
+      </div>
+      <div class="stat-item">
+        <h3>{{ userAge }} Anos</h3> <!-- Exibe a idade calculada -->
+        <p>Idade</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Account Section -->
+  <ion-list>
+
+    <!-- Notifications -->
+    <ion-item lines="none">
+      <ion-icon slot="start" name="notifications-outline"></ion-icon>
+      <ion-label>Notificação</ion-label>
+      <ion-toggle slot="end" [(ngModel)]="notificationsEnabled"></ion-toggle>
+      <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>  <!-- Adicionando o ícone de seta no final -->
+    </ion-item>
+
+    <!-- Dados pessoais -->
+    <ion-item button (click)="goToEditPersonalData()">
+      <ion-icon slot="start" name="person-outline"></ion-icon>
+      <ion-label>Dados pessoais</ion-label>
+      <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+    </ion-item>
+
+    <!-- IMC -->
+      <ion-item button (click)="goToIMCCalculation()">
+        <ion-icon slot="start" name="fitness-outline"></ion-icon>
+        <ion-label>Cálculo de IMC</ion-label>
+        <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+      </ion-item>
+
+    <!-- LogOut Section -->
+    <ion-item class="sla" button (click)="logOut()">
+      <ion-icon slot="start" name="log-out-outline"></ion-icon>
+      <ion-label>Sair</ion-label>
+      <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+    </ion-item>
+
+  </ion-list>
+</ion-content>

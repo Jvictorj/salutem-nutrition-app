@@ -1,9 +1,14 @@
 <ion-header>
+<<<<<<< HEAD
   <ion-toolbar>
+=======
+  <ion-toolbar color="primary" class="header-center">
+>>>>>>> final-V2
     <ion-title>Rotina de Treino</ion-title>
   </ion-toolbar>
 </ion-header>
 
+<<<<<<< HEAD
 <ion-content>
 
   <!-- Botão "Check" para Rotina de Treino -->
@@ -48,14 +53,67 @@
   <div class="section-header">
     <h2>O que você quer treinar</h2>
   </div>
+=======
+
+<ion-content>
+
+  <!-- Botão para "Check" a Rotina de Treino -->
+  <div class="routine-container">
+    <ion-button shape="round" class="routine-btn">Check</ion-button>
+  </div>
+
+  <!-- Seção "Treinos Disponíveis" -->
+  <div class="section-header centered">
+    <h2>Treinos Disponíveis</h2>
+  </div>
+  
+
+  <ion-list lines="none" class="training-list">
+    <ion-card class="training-card">
+      <ion-card-header>
+        <ion-card-title>Treino de Corpo Inteiro</ion-card-title>
+        <p>11 Exercícios | 32mins</p>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-button expand="block" fill="outline">Veja mais</ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="training-card">
+      <ion-card-header>
+        <ion-card-title>Treino Inferior do Corpo</ion-card-title>
+        <p>12 Exercícios | 40mins</p>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-button expand="block" fill="outline">Veja mais</ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="training-card">
+      <ion-card-header>
+        <ion-card-title>Treino Abdominal</ion-card-title>
+        <p>14 Exercícios | 20mins</p>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-button expand="block" fill="outline">Veja mais</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+>>>>>>> final-V2
 
   <!-- Seção de Vídeos -->
   <div class="section-header">
     <h2>Vídeos de Treino</h2>
   </div>
 
+<<<<<<< HEAD
   <ion-list *ngIf="videos.length > 0" lines="none">
     <ion-card *ngFor="let video of videos">
+=======
+  <ion-list *ngIf="videos.length > 0" lines="none" class="video-list">
+    <ion-card *ngFor="let video of videos" class="video-card">
+>>>>>>> final-V2
       <ion-img [src]="video.snippet.thumbnails.high.url"></ion-img>
       <ion-card-header>
         <ion-card-title>{{ video.snippet.title }}</ion-card-title>
@@ -74,6 +132,7 @@
     </ion-card>
   </ion-list>
 
+<<<<<<< HEAD
   <div *ngIf="videos.length === 0">
     <p>Nenhum vídeo disponível</p>
   </div>
@@ -130,4 +189,10 @@
     </ion-card-content>
   </ion-card>
 
+=======
+  <div *ngIf="videos.length === 0" class="no-videos">
+    <p>Nenhum vídeo disponível</p>
+  </div>
+
+>>>>>>> final-V2
 </ion-content>

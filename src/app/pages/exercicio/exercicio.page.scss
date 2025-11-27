@@ -1,0 +1,103 @@
+ion-content {
+  --padding-start: 16px;
+  --padding-end: 16px;
+}
+
+
+.routine-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.routine-btn {
+  --background: linear-gradient(135deg, #f7c3fc, #e5e6fc);
+  --border-radius: 25px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.section-header h2 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  
+}
+
+.more-link {
+  color: #7b7ce6;
+  font-size: 0.85rem;
+}
+
+.next-workouts,
+.training-list {
+  margin-top: 10px;
+}
+
+.workout-item {
+  --background: #ffffff;
+  --border-radius: 12px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  margin-bottom: 10px;
+}
+
+.training-card {
+  --background: var(--ion-color-quint-tint);
+  --border-radius: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.training-card ion-card-title {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.training-card p {
+  font-size: 0.9rem;
+  color: #4d2da5;
+}
+
+.video-card {
+  --background: #f4f4f4;
+  --border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.no-videos {
+  text-align: center;
+  color: #999;
+  margin-top: 20px;
+}
+
+.header-center {
+  text-align: center; /* Centraliza o texto */
+  --ion-text-align: center; /* Estilo adicional para suporte do Ionic */
+}
+
+ion-title {
+  font-weight: bold; /* Opcional: destaca o título */
+  color: var(--ion-color-secondary)
+}
+
+.centered {
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center;    /* Centraliza verticalmente */
+  text-align: center;     /* Garante o alinhamento do texto */
+  margin: 20px 0;         /* Adiciona espaçamento opcional */
+}
+
+.centered h2 {
+  font-size: 1.5rem; /* Ajuste opcional para o tamanho do título */
+  font-weight: bold; /* Estilo adicional para destacar */
+}

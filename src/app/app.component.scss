@@ -1,0 +1,16 @@
+/* app.component.scss ou em um arquivo SCSS específico da página */
+
+ion-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 10; /* Garantir que o footer fique acima do conteúdo */
+  background-color: #ffffff; /* Exemplo de cor de fundo, ajuste conforme necessário */
+}
+
+/* Para o conteúdo acima do footer não ficar oculto atrás dele */
+ion-content {
+  padding-bottom: 56px; /* Ajuste o valor conforme a altura do footer */
+}

@@ -1,0 +1,154 @@
+ion-content {
+    --background: #f8f9fa;
+    padding: 16px;
+    box-sizing: border-box;
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    text-align: center; /* Centraliza o texto */
+    justify-content: center;
+    justify-items: center;
+  }
+  
+  /* Cabeçalho */
+  ion-header {
+    --background: #ffffff;
+  }
+  
+  ion-toolbar {
+    --background: var(--ion-color-primary-shade);
+    --color: #ffffff;
+  }
+  
+  ion-title {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  /* Estilo dos itens */
+  ion-item {
+    --background: #ffffff;
+    --border-color: #ced4da;
+    --color: #495057;
+    margin-bottom: 6px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 6px;
+  }
+  
+  /* Botões */
+  ion-button {
+    --background: var(--ion-color-primary-shade);
+    --color: #ffffff;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 16px auto; /* Centralizar e criar espaçamento vertical */
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Destaque visual */
+    display: block;
+  }
+  
+  ion-button:hover {
+    --background: var(--ion-color-primary-tint);
+    cursor: pointer;
+  }
+  
+  /* Resultados */
+  .resultado {
+    display: block;
+    visibility: visible;
+    background-color: #ffffff;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  h3 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #1d3557;
+    display: flex;
+    align-items: center;
+    text-align: center; /* Centraliza o texto */
+    justify-content: center;
+    justify-items: center;
+  }
+  
+  p {
+    font-size: 16px;
+    color: #333;
+    text-align: center; /* Centraliza o texto */
+  }  
+  
+  p.highlight {
+    color: #007bff;
+    font-weight: bold;
+  }
+
+  p.feedback {
+    font-size: 14px;
+    color: #495057;
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin-bottom: 70px;
+  }
+
+  .feedback {
+    font-size: 1.1rem;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .feedback-baixo {
+    background-color: #fffbcc; /* Fundo amarelo claro para Abaixo do peso */
+    border-left: 4px solid #fffbcc;
+  }
+  
+  .feedback-normal {
+    background-color: #d0f8d0; /* Fundo verde claro para Peso normal */
+    border-left: 4px solid #d0f8d0;
+  }
+  
+  .feedback-sobrepeso {
+    background-color: #ffe0b3; /* Fundo laranja claro para Sobrepeso */
+    border-left: 4px solid #ffe0b3;
+  }
+  
+  .feedback-obesidade {
+    background-color: #ffcccb; /* Fundo vermelho claro para Obesidade */
+    border-left: 4px solid #ffcccb;
+  }
+  
+
+  .classificacao-baixo {
+    color: #ffc409; /* Amarelo para Abaixo do peso */
+  }
+  
+  .classificacao-normal {
+    color: #2dd55b; /* Verde para Peso normal */
+  }
+  
+  .classificacao-sobrepeso {
+    color: #ff9800; /* Laranja para Sobrepeso */
+  }
+  
+  .classificacao-obesidade1 {
+    color: #ff5722; /* Vermelho claro para Obesidade grau 1 */
+  }
+  
+  .classificacao-obesidade2 {
+    color: #e53935; /* Vermelho médio para Obesidade grau 2 */
+  }
+  
+  .classificacao-obesidade3 {
+    color: #c5000f; /* Vermelho escuro para Obesidade grau 3 */
+  }
+  
+  .highlight {
+    font-weight: bold;
+  }
+  
+  
+  

@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Receitas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar [(ngModel)]="searchQuery" (ionInput)="onSearch()"></ion-searchbar>
+
+  <ion-list>
+    <ion-item *ngFor="let receita of receitas">
+      <ion-avatar slot="start">
+        <ion-img [src]="receita.image"></ion-img>
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ receita.title }}</h2>
+        <p>{{ receita.readyInMinutes }} minutos</p>
+      </ion-label>
+      <ion-button fill="clear" (click)="viewRecipe(receita)">Ver Receita</ion-button>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="isLoading">Carregando...</div>
+  <div *ngIf="errorMessage">{{ errorMessage }}</div>
+</ion-content>
