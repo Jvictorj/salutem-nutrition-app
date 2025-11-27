@@ -9,5 +9,18 @@ export const environment = {
     messagingSenderId: "",
     appId: "",
     measurementId: ""
+  },
+  apis: {
+    spoonacular: {
+      url: '',
+      key: '' // Sua chave aqui
+    },
+    youtube: {
+      url: '',
+      key: '' // Sua chave aqui
+    },
+    wger: {
+      url: ''
+    }
   }
 };

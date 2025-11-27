@@ -1,0 +1,132 @@
+$sage-green: #A7B59B;
+$text-dark: #333;
+$bg-light: #f9f9f9;
+
+ion-toolbar {
+  --background: #{$sage-green};
+  --color: white;
+}
+
+.receita-detail-content {
+  --background: #{$bg-light};
+}
+
+.hero-image {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background: linear-gradient(to top, #{$bg-light}, transparent);
+  }
+}
+
+.content-container {
+  padding: 20px;
+  background: #{$bg-light};
+  border-radius: 30px 30px 0 0; // Arredonda o topo para subir na imagem
+  margin-top: -30px; // Sobe o conteúdo por cima da imagem
+  position: relative;
+  min-height: 500px;
+
+  .meta-badges {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+
+    ion-chip {
+      font-weight: 600;
+    }
+  }
+
+  .section {
+    margin-bottom: 25px;
+
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: $text-dark;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      ion-icon { color: $sage-green; }
+    }
+  }
+
+  // Lista de Ingredientes
+  .ingredients-list {
+    background: transparent;
+    padding: 0;
+
+    ion-item {
+      --background: white;
+      --border-radius: 12px;
+      margin-bottom: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+      font-size: 0.9rem;
+      color: #555;
+
+      ion-icon {
+        font-size: 1.2rem;
+        margin-right: 10px;
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .divider {
+    height: 1px;
+    background-color: #e0e0e0;
+    margin: 30px 0;
+  }
+
+  // Instruções
+  .instructions-text {
+    line-height: 1.6;
+    color: #444;
+    font-size: 1rem;
+    white-space: pre-line; // Respeita quebras de linha
+  }
+
+  .step-item {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+
+    .step-number {
+      min-width: 30px;
+      height: 30px;
+      background-color: $sage-green;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: #444;
+      padding-top: 4px;
+    }
+  }
+}

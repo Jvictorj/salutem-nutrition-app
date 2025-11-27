@@ -1,13 +1,19 @@
-import { finalize } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/user/auth.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 
-
-
-import { ImcService } from 'src/app/services/imc.service';
+interface UserData {
+  fullName?: string;
+  email?: string;
+  height?: number;
+  weight?: number;
+  dateOfBirth?: string;
+  photoUrl?: string;
+  gender?: string;
+}
 
 @Component({
   selector: 'app-profile',
@@ -15,18 +21,14 @@ import { ImcService } from 'src/app/services/imc.service';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-  user: any = {}; // Dados do usuário
-  notificationsEnabled: boolean = true;
-  userAge: number = 0; // Variável para armazenar a idade
-  profilePicture: string = ''; // URL da imagem de perfil
-  avatarUrl: string = 'assets/avatar/default-avatar.PNG'; // URL da imagem padrão
-
-  peso!: number; // Peso do usuário
-  altura!: number; // Altura do usuário
-  resultadoIMC!: { imc: number, classificacao: string };
-
-
   
+  user: UserData = {};
+  userAge: number | string = '--';
+  userIMC: number | null = null;
+  userIMCClass: string = '';
+  
+  profilePicture: string = 'assets/icon/favicon.png'; // Fallback
+  notificationsEnabled: boolean = true;
 
   constructor(
     private authService: AuthService,
@@ -39,138 +41,100 @@ export class ProfilePage implements OnInit {
     this.checkAuthentication();
   }
 
-  // Verificar se o usuário está autenticado
   async checkAuthentication() {
-    const user = await this.authService.getCurrentUser();
-    if (user) {
-      // Usuário autenticado, carrega os dados
-      this.loadUserData();
+    const currentUser = await this.authService.getCurrentUser();
+    if (currentUser) {
+      this.loadUserData(currentUser.uid, currentUser.email);
     } else {
-      // Usuário não autenticado, redireciona para a página de login
       this.router.navigate(['/login']);
     }
   }
 
-  // Método para carregar os dados do usuário
-  async loadUserData() {
-    const user = await this.authService.getCurrentUser();
-    if (user) {
-      const userId = user.uid;
-      const userDoc = await this.firestore.collection('users').doc(userId).get().toPromise();
+  async loadUserData(uid: string, email: string | null) {
+    try {
+      const doc = await this.firestore.collection('users').doc(uid).get().toPromise();
       
-      // Verificar se o documento existe antes de acessar os dados
-      if (userDoc && userDoc.exists) {
-        this.user = userDoc.data(); // Dados do usuário
-        this.profilePicture = this.user.photoUrl || this.avatarUrl; // Carrega a imagem de perfil, se houver
-        // Calcula a idade após carregar os dados
-        this.userAge = this.calculateAge(this.user.dateOfBirth);
-      } else {
-        console.error("Usuário não encontrado");
+      if (doc && doc.exists) {
+        this.user = doc.data() as UserData;
+        this.user.email = email || ''; // Garante que o email vem do Auth se não tiver no banco
+
+        // Processar Avatar
+        if (this.user.photoUrl) {
+          this.profilePicture = this.user.photoUrl;
+        }
+
+        // Processar Idade
+        if (this.user.dateOfBirth) {
+          this.userAge = this.calculateAge(this.user.dateOfBirth);
+        }
+
+        // Calcular IMC para o Card
+        if (this.user.height && this.user.weight) {
+          this.calculateIMC(this.user.weight, this.user.height);
+        }
       }
-    } else {
-      console.error("Usuário não autenticado");
+    } catch (error) {
+      console.error('Erro ao carregar perfil:', error);
     }
   }
 
-  // Método para calcular a idade com base na data de nascimento
-  calculateAge(dateOfBirth: string): number {
-    const birthDate = new Date(dateOfBirth);
+  calculateAge(dateString: string): number {
+    const birthDate = new Date(dateString);
     const today = new Date();
     let age = today.getFullYear() - birthDate.getFullYear();
-    const month = today.getMonth();
-    if (month < birthDate.getMonth() || (month === birthDate.getMonth() && today.getDate() < birthDate.getDate())) {
-      age--; // Ajusta a idade se o aniversário ainda não aconteceu neste ano
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
     }
     return age;
   }
 
-  // Método para editar o perfil
-  editProfile() {
-    this.router.navigate(['/edit-profile']);
+  calculateIMC(weight: number, heightCm: number) {
+    const heightM = heightCm / 100;
+    this.userIMC = weight / (heightM * heightM);
+    
+    // Classificação simples para o card
+    if (this.userIMC < 18.5) this.userIMCClass = 'Abaixo do peso';
+    else if (this.userIMC < 24.9) this.userIMCClass = 'Peso normal';
+    else if (this.userIMC < 29.9) this.userIMCClass = 'Sobrepeso';
+    else this.userIMCClass = 'Obesidade';
   }
 
-  // Método para atualizar os dados do usuário
-  async updateUserData() {
-    const user = await this.authService.getCurrentUser();
-    if (user) {
-      const userId = user.uid;
-      try {
-        await this.firestore.collection('users').doc(userId).update({
-          height: this.user.height,
-          weight: this.user.weight,
-          age: this.userAge, // Atualizando a idade também
-          fullName: this.user.fullName,
-        });
-      } catch (error) {
-        console.error("Erro ao atualizar dados:", error);
-      }
-    } else {
-      console.error("Usuário não autenticado");
-    }
-  }
-
-  // Método para fazer upload da imagem de perfil
+  // Upload de Imagem
   async uploadProfileImage(event: any) {
     const file = event.target.files[0];
-    if (!file) {
-      console.error("Nenhum arquivo selecionado");
-      return;
-    }
+    if (!file) return;
 
     const user = await this.authService.getCurrentUser();
-    if (user) {
-      const userId = user.uid;
-      const filePath = `users/${userId}/profile.jpg`; // O caminho onde a imagem será armazenada no Firebase Storage
-      const fileRef = this.storage.ref(filePath);
-      
-      // Primeiro, faz o upload do arquivo
-      const task = this.storage.upload(filePath, file);
+    if (!user) return;
 
-      // Espera o upload terminar antes de obter a URL
-      task.snapshotChanges().pipe(
-        finalize(() => {
-          fileRef.getDownloadURL().subscribe((url: string) => {
-            this.profilePicture = url;
-            this.user.photoUrl = url;
-            
-            // Atualizar o Firestore com o URL da imagem de perfil
-            this.firestore.collection('users').doc(userId).update({
-              photoUrl: url
-            }).then(() => {
-              console.log("URL da imagem de perfil atualizada com sucesso.");
-            }).catch((error) => {
-              console.error("Erro ao atualizar URL no Firestore:", error);
-            });
-          }, error => {
-            console.error("Erro ao obter a URL da imagem:", error);
-          });
-        })
-      ).subscribe();
-      
+    const filePath = `users/${user.uid}/profile_${Date.now()}.jpg`;
+    const fileRef = this.storage.ref(filePath);
+    const task = this.storage.upload(filePath, file);
 
-    } else {
-      console.error("Usuário não autenticado");
-    }
+    // Observa o progresso/finalização
+    task.snapshotChanges().pipe(
+      finalize(() => {
+        fileRef.getDownloadURL().subscribe((url) => {
+          this.profilePicture = url;
+          // Salva URL no Firestore
+          this.firestore.collection('users').doc(user.uid).update({ photoUrl: url });
+        });
+      })
+    ).subscribe();
   }
 
-
-  // Método para ir para a página de perfil
-  goToProfile() {
-    this.router.navigate(['/profile']);
+  // Navegação
+  goToEditPersonalData() {
+    this.router.navigate(['/edit-personal-data']); // Crie esta rota depois se não existir
   }
 
   goToIMCCalculation() {
     this.router.navigate(['/imc-calculation']);
-  }  
-
-  // Método para ir para a página de edição de dados pessoais
-  goToEditPersonalData() {
-    this.router.navigate(['/edit-personal-data']);
   }
 
-  // LogOut
   async logOut() {
-    await this.authService.logout();  // Faz logout
-    this.router.navigate(['/login']);  // Redireciona para a tela de login
+    await this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

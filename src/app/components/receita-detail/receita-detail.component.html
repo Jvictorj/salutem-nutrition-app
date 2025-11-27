@@ -1,0 +1,71 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-title>{{ receita?.title }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon name="close-circle-outline" size="large"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="receita-detail-content">
+  
+  <div *ngIf="receita">
+    <!-- Imagem de Capa -->
+    <div class="hero-image">
+      <img [src]="receita.image" alt="{{ receita.title }}" onerror="this.src='assets/icon/favicon.png'"/>
+      <div class="overlay"></div>
+    </div>
+
+    <div class="content-container">
+      
+      <!-- Badges de Informação (Opcional, se a API fornecer tempo/porções) -->
+      <div class="meta-badges" *ngIf="receita.readyInMinutes || receita.servings">
+        <ion-chip color="secondary" *ngIf="receita.readyInMinutes">
+          <ion-icon name="time-outline" color="dark"></ion-icon>
+          <ion-label color="dark">{{ receita.readyInMinutes }} min</ion-label>
+        </ion-chip>
+        <ion-chip color="secondary" *ngIf="receita.servings">
+          <ion-icon name="restaurant-outline" color="dark"></ion-icon>
+          <ion-label color="dark">{{ receita.servings }} porções</ion-label>
+        </ion-chip>
+      </div>
+
+      <!-- Seção Ingredientes -->
+      <div class="section">
+        <h3><ion-icon name="basket-outline"></ion-icon> Ingredientes</h3>
+        <ion-list lines="none" class="ingredients-list">
+          <ion-item *ngFor="let ingredient of receita.extendedIngredients">
+            <ion-icon name="checkmark-circle" slot="start" color="success"></ion-icon>
+            <ion-label class="ion-text-wrap">
+              {{ ingredient.original }}
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Seção Instruções -->
+      <div class="section">
+        <h3><ion-icon name="book-outline"></ion-icon> Modo de Preparo</h3>
+        
+        <!-- Se as instruções vierem como texto corrido -->
+        <p class="instructions-text" *ngIf="!receita.analyzedInstructions?.length">
+          {{ receita.instructions || 'Instruções não disponíveis.' }}
+        </p>
+
+        <!-- Se as instruções vierem estruturadas em passos (comum na API Spoonacular) -->
+        <div *ngIf="receita.analyzedInstructions?.length > 0">
+          <div class="step-item" *ngFor="let step of receita.analyzedInstructions[0].steps">
+            <div class="step-number">{{ step.number }}</div>
+            <p>{{ step.step }}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</ion-content>

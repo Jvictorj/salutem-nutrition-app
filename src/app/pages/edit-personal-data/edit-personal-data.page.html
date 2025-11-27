@@ -1,62 +1,125 @@
-<ion-header>
-  <ion-toolbar>
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button defaultHref="/profile" icon="arrow-back"></ion-back-button>
     </ion-buttons>
-    <ion-title>Editar Dados Pessoais</ion-title>
+    <ion-title>Editar Perfil</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <form (ngSubmit)="updateUserData()">
-    <!-- Nome Completo -->
-    <ion-item>
-      <ion-label position="floating">Nome Completo</ion-label>
-      <ion-input [(ngModel)]="user.fullName" name="fullName" required></ion-input>
-    </ion-item>
+<ion-content class="edit-page">
+  <div class="content-container">
+    
+    <div class="form-header">
+      <p>Mantenha seus dados atualizados para um melhor acompanhamento.</p>
+    </div>
 
-    <!-- Data de Nascimento -->
-    <ion-item>
-      <ion-label position="floating">Data de Nascimento</ion-label>
-      <ion-datetime [(ngModel)]="user.dateOfBirth" name="dateOfBirth" displayFormat="YYYY-MM-DD"></ion-datetime>
-    </ion-item>
+    <form (ngSubmit)="updateUserData()" class="edit-form">
+      
+      <!-- Nome Completo -->
+      <div class="input-group">
+        <label>Nome Completo</label>
+        <ion-item lines="none" class="custom-input">
+          <ion-icon name="person-outline" slot="start"></ion-icon>
+          <ion-input [(ngModel)]="user.fullName" name="fullName" type="text" placeholder="Seu nome"></ion-input>
+        </ion-item>
+      </div>
 
-    <!-- E-mail -->
-    <ion-item>
-      <ion-label position="floating">E-mail</ion-label>
-      <ion-input [(ngModel)]="user.email" name="email" type="email" required></ion-input>
-    </ion-item>
+      <!-- Data de Nascimento -->
+      <div class="input-group">
+        <label>Data de Nascimento</label>
+        <ion-item lines="none" class="custom-input" id="open-date-modal" button="true">
+          <ion-icon name="calendar-outline" slot="start"></ion-icon>
+          <ion-label class="date-value">
+            {{ user.dateOfBirth ? (user.dateOfBirth | date:'dd/MM/yyyy') : 'DD/MM/AAAA' }}
+          </ion-label>
+        </ion-item>
+        
+        <!-- Modal de Data -->
+        <ion-modal trigger="open-date-modal" [initialBreakpoint]="0.5" [breakpoints]="[0, 0.5]">
+          <ng-template>
+            <ion-content>
+              <ion-datetime
+                presentation="date"
+                [(ngModel)]="user.dateOfBirth"
+                name="dateOfBirth"
+                [showDefaultButtons]="true"
+                doneText="Confirmar"
+                cancelText="Cancelar">
+              </ion-datetime>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+      </div>
 
-    <!-- Senha -->
-    <ion-item>
-      <ion-label position="floating">Senha</ion-label>
-      <ion-input [(ngModel)]="user.password" name="password" type="password"></ion-input>
-    </ion-item>
+      <!-- Gênero -->
+      <div class="input-group">
+        <label>Gênero</label>
+        <ion-item lines="none" class="custom-input">
+          <ion-icon name="male-female-outline" slot="start"></ion-icon>
+          <ion-select [(ngModel)]="user.gender" name="gender" placeholder="Selecione" interface="popover">
+            <ion-select-option value="male">Masculino</ion-select-option>
+            <ion-select-option value="female">Feminino</ion-select-option>
+            <ion-select-option value="other">Outro</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
 
-    <!-- Gênero -->
-    <ion-item>
-      <ion-label position="floating">Gênero</ion-label>
-      <ion-input [(ngModel)]="user.gender" name="gender"></ion-input>
-    </ion-item>
+      <div class="row-inputs">
+        <!-- Altura -->
+        <div class="input-group half">
+          <label>Altura (cm)</label>
+          <ion-item lines="none" class="custom-input">
+            <ion-icon name="resize-outline" slot="start"></ion-icon>
+            <ion-input [(ngModel)]="user.height" name="height" type="number"></ion-input>
+          </ion-item>
+        </div>
 
-    <!-- Altura -->
-    <ion-item>
-      <ion-label position="floating">Altura (cm)</ion-label>
-      <ion-input [(ngModel)]="user.height" name="height" type="number"></ion-input>
-    </ion-item>
+        <!-- Peso -->
+        <div class="input-group half">
+          <label>Peso (kg)</label>
+          <ion-item lines="none" class="custom-input">
+            <ion-icon name="scale-outline" slot="start"></ion-icon>
+            <ion-input [(ngModel)]="user.weight" name="weight" type="number"></ion-input>
+          </ion-item>
+        </div>
+      </div>
 
-    <!-- Peso -->
-    <ion-item>
-      <ion-label position="floating">Peso (kg)</ion-label>
-      <ion-input [(ngModel)]="user.weight" name="weight" type="number"></ion-input>
-    </ion-item>
+      <!-- Telefone -->
+      <div class="input-group">
+        <label>Telefone</label>
+        <ion-item lines="none" class="custom-input">
+          <ion-icon name="call-outline" slot="start"></ion-icon>
+          <ion-input [(ngModel)]="user.phoneNumber" name="phoneNumber" type="tel" placeholder="(00) 00000-0000"></ion-input>
+        </ion-item>
+      </div>
 
-    <!-- Número de telefone -->
-    <ion-item>
-      <ion-label position="floating">Telefone</ion-label>
-      <ion-input [(ngModel)]="user.phoneNumber" name="phoneNumber" type="tel"></ion-input>
-    </ion-item>
+      <div class="divider"></div>
+      <h3>Credenciais</h3>
 
-    <ion-button expand="full" type="submit" color="primary">Salvar alterações</ion-button>
-  </form>
+      <!-- E-mail -->
+      <div class="input-group">
+        <label>E-mail</label>
+        <ion-item lines="none" class="custom-input">
+          <ion-icon name="mail-outline" slot="start"></ion-icon>
+          <ion-input [(ngModel)]="user.email" name="email" type="email"></ion-input>
+        </ion-item>
+      </div>
+
+      <!-- Nova Senha (Opcional) -->
+      <div class="input-group">
+        <label>Nova Senha (Opcional)</label>
+        <ion-item lines="none" class="custom-input">
+          <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+          <ion-input [(ngModel)]="user.password" name="password" type="password" placeholder="Digite apenas para alterar"></ion-input>
+        </ion-item>
+      </div>
+
+      <ion-button expand="block" type="submit" class="save-btn" [disabled]="isLoading">
+        <span *ngIf="!isLoading">Salvar Alterações</span>
+        <ion-spinner name="crescent" *ngIf="isLoading"></ion-spinner>
+      </ion-button>
+
+    </form>
+  </div>
 </ion-content>

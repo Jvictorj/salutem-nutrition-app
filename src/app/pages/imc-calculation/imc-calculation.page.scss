@@ -1,154 +1,201 @@
-ion-content {
-    --background: #f8f9fa;
-    padding: 16px;
-    box-sizing: border-box;
-    overflow: auto;
+$sage-green: #A7B59B;
+$text-dark: #333;
+$bg-light: #f4f6f5;
+
+ion-toolbar {
+  --background: #{$sage-green};
+  --color: white;
+}
+
+.imc-page {
+  --background: #{$bg-light};
+}
+
+.content-container {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+// Card Introdutório (Topo)
+.intro-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  text-align: center;
+  margin: 0 0 25px;
+  padding: 20px 10px;
+  overflow: visible;
+
+  .icon-circle {
+    width: 60px;
+    height: 60px;
+    background: rgba($sage-green, 0.15);
+    border-radius: 50%;
+    margin: -40px auto 10px; // Sobe o ícone para fora do card
     display: flex;
-    align-items: center;
-    text-align: center; /* Centraliza o texto */
     justify-content: center;
-    justify-items: center;
+    align-items: center;
+    
+    ion-icon {
+      font-size: 30px;
+      color: $sage-green;
+    }
   }
-  
-  /* Cabeçalho */
-  ion-header {
-    --background: #ffffff;
+
+  ion-card-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: $text-dark;
   }
-  
-  ion-toolbar {
-    --background: var(--ion-color-primary-shade);
-    --color: #ffffff;
+
+  ion-card-content {
+    font-size: 0.9rem;
+    color: #666;
+    padding-bottom: 0;
   }
-  
-  ion-title {
-    font-size: 18px;
-    font-weight: bold;
+}
+
+// Formulário
+.form-container {
+  background: white;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+
+  .input-wrapper {
+    margin-bottom: 15px;
+
+    label {
+      font-size: 0.85rem;
+      color: #777;
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+
+      ion-icon { color: $sage-green; font-size: 1rem; }
+    }
+
+    .custom-input {
+      --background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      --padding-start: 10px;
+      height: 48px;
+      --min-height: 48px;
+
+      ion-input, ion-select {
+        font-size: 1rem;
+        font-weight: 500;
+        color: $text-dark;
+      }
+    }
   }
-  
-  /* Estilo dos itens */
-  ion-item {
-    --background: #ffffff;
-    --border-color: #ced4da;
-    --color: #495057;
-    margin-bottom: 6px;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    padding: 6px;
+
+  .btn-calculate {
+    margin-top: 25px;
+    --background: #{$sage-green};
+    --border-radius: 30px;
+    --box-shadow: 0 4px 10px rgba(167, 181, 155, 0.4);
+    font-weight: 700;
+    height: 50px;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
   }
-  
-  /* Botões */
-  ion-button {
-    --background: var(--ion-color-primary-shade);
-    --color: #ffffff;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin: 16px auto; /* Centralizar e criar espaçamento vertical */
+}
+
+// Seção de Resultados
+.result-section {
+  margin-top: 30px;
+
+  .result-header {
     text-align: center;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Destaque visual */
-    display: block;
-  }
-  
-  ion-button:hover {
-    --background: var(--ion-color-primary-tint);
-    cursor: pointer;
-  }
-  
-  /* Resultados */
-  .resultado {
-    display: block;
-    visibility: visible;
-    background-color: #ffffff;
-    padding: 8px;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  h3 {
-    font-size: 20px;
-    font-weight: bold;
-    color: #1d3557;
-    display: flex;
-    align-items: center;
-    text-align: center; /* Centraliza o texto */
-    justify-content: center;
-    justify-items: center;
-  }
-  
-  p {
-    font-size: 16px;
-    color: #333;
-    text-align: center; /* Centraliza o texto */
-  }  
-  
-  p.highlight {
-    color: #007bff;
-    font-weight: bold;
+    margin-bottom: 15px;
+    h3 {
+      font-size: 1.1rem;
+      color: #555;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
   }
 
-  p.feedback {
-    font-size: 14px;
-    color: #495057;
-    padding: 8px 12px;
-    border-radius: 4px;
-    margin-bottom: 70px;
-  }
+  .result-card {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    margin: 0;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 
-  .feedback {
-    font-size: 1.1rem;
-    padding: 10px;
-    border-radius: 5px;
-  }
-  
-  .feedback-baixo {
-    background-color: #fffbcc; /* Fundo amarelo claro para Abaixo do peso */
-    border-left: 4px solid #fffbcc;
-  }
-  
-  .feedback-normal {
-    background-color: #d0f8d0; /* Fundo verde claro para Peso normal */
-    border-left: 4px solid #d0f8d0;
-  }
-  
-  .feedback-sobrepeso {
-    background-color: #ffe0b3; /* Fundo laranja claro para Sobrepeso */
-    border-left: 4px solid #ffe0b3;
-  }
-  
-  .feedback-obesidade {
-    background-color: #ffcccb; /* Fundo vermelho claro para Obesidade */
-    border-left: 4px solid #ffcccb;
-  }
-  
+    .imc-circle {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin: 0 auto 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border: 6px solid #eee;
 
-  .classificacao-baixo {
-    color: #ffc409; /* Amarelo para Abaixo do peso */
+      .value { font-size: 2.2rem; font-weight: 800; color: $text-dark; line-height: 1; }
+      .label { font-size: 0.7rem; color: #999; margin-top: 2px; text-transform: uppercase; }
+      
+      // Cores da Borda
+      &.classificacao-baixo { border-color: #ffc409; }
+      &.classificacao-normal { border-color: #2dd36f; }
+      &.classificacao-sobrepeso { border-color: #ff9800; }
+      &.classificacao-obesidade1, &.classificacao-obesidade2 { border-color: #eb445a; }
+      &.classificacao-obesidade3 { border-color: #8a1c27; }
+    }
+
+    .classification {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin: 0 0 15px;
+      
+      // Cores do Texto
+      &.text-classificacao-baixo { color: #ffc409; }
+      &.text-classificacao-normal { color: #2dd36f; }
+      &.text-classificacao-sobrepeso { color: #ff9800; }
+      &.text-classificacao-obesidade1, &.text-classificacao-obesidade2 { color: #eb445a; }
+      &.text-classificacao-obesidade3 { color: #8a1c27; }
+    }
+
+    .feedback-box {
+      padding: 15px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      color: #444;
+      line-height: 1.4;
+      margin-bottom: 20px;
+
+      // Fundos suaves
+      &.bg-classificacao-baixo { background-color: rgba(#ffc409, 0.15); }
+      &.bg-classificacao-normal { background-color: rgba(#2dd36f, 0.15); }
+      &.bg-classificacao-sobrepeso { background-color: rgba(#ff9800, 0.15); }
+      &.bg-classificacao-obesidade1, &.bg-classificacao-obesidade2 { background-color: rgba(#eb445a, 0.15); }
+      &.bg-classificacao-obesidade3 { background-color: rgba(#8a1c27, 0.15); }
+    }
+
+    .ideal-weight {
+      border-top: 1px solid #eee;
+      padding-top: 15px;
+      p { margin: 0 0 5px; font-size: 0.8rem; color: #888; text-transform: uppercase; }
+      h4 { margin: 0; font-size: 1.4rem; color: $text-dark; font-weight: 700; }
+    }
   }
-  
-  .classificacao-normal {
-    color: #2dd55b; /* Verde para Peso normal */
-  }
-  
-  .classificacao-sobrepeso {
-    color: #ff9800; /* Laranja para Sobrepeso */
-  }
-  
-  .classificacao-obesidade1 {
-    color: #ff5722; /* Vermelho claro para Obesidade grau 1 */
-  }
-  
-  .classificacao-obesidade2 {
-    color: #e53935; /* Vermelho médio para Obesidade grau 2 */
-  }
-  
-  .classificacao-obesidade3 {
-    color: #c5000f; /* Vermelho escuro para Obesidade grau 3 */
-  }
-  
-  .highlight {
-    font-weight: bold;
-  }
-  
-  
-  
+}
+
+// Animação
+.fade-in {
+  animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}

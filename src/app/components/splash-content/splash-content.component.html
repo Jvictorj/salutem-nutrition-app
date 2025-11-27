@@ -1,0 +1,20 @@
+<ion-content class="splash-screen">
+
+  <div class="splash-container">
+
+    <div class="image-container">
+      <img [src]="imageSrc" *ngIf="imageSrc" alt="Splash Image">
+    </div>
+
+    <div class="text-content">
+      <h1>{{ title }}</h1>
+      <p>{{ description }}</p>
+    </div>
+
+    <ion-button class="next-button" (click)="goToNext()">
+      <ion-icon name="chevron-forward-outline"></ion-icon>
+    </ion-button>
+
+  </div>
+
+</ion-content>

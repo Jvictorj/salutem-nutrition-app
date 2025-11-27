@@ -1,77 +1,230 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar color="primary">
-    <ion-title>Informações Nutricionais</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" color="light"></ion-back-button>
+    </ion-buttons>
+    <ion-title color="light">Informações Nutricionais</ion-title>
   </ion-toolbar>
+
+  <!-- Painel Fixo de Resumo Rápido (Header) -->
+  <div class="header-summary">
+    <div class="summary-item">
+      <h2>{{ dailySummary.caloriesConsumed | number:'1.0-0' }}</h2>
+      <p>Consumidas</p>
+    </div>
+    <div class="summary-item">
+      <h2>{{ dailySummary.caloriesGoal - dailySummary.caloriesConsumed | number:'1.0-0' }}</h2>
+      <p>Restantes</p>
+    </div>
+    <div class="summary-item">
+      <h2>{{ getProgress(dailySummary.caloriesConsumed, dailySummary.caloriesGoal) * 100 | number:'1.0-0' }}%</h2>
+      <p>Meta</p>
+    </div>
+  </div>
+
+  <!-- Segment (Abas) -->
+  <div class="segment-container">
+    <ion-segment [(ngModel)]="viewMode" mode="ios">
+      <ion-segment-button value="resumo">
+        <ion-label>Resumo</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="buscar">
+        <ion-label>Buscar Alimentos</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
 </ion-header>
 
-<ion-content>
-  <!-- Campo de busca -->
-  <div class="search-container">
-    <ion-searchbar
-      placeholder="Pesquise um alimento..."
-      [(ngModel)]="searchQuery"
-      (ionInput)="onSearch()">
-    </ion-searchbar>
+<ion-content class="nutriente-page">
+
+  <!-- ================= VISTA: RESUMO ================= -->
+  <div *ngIf="viewMode === 'resumo'" class="content-wrapper fade-in">
+    
+    <!-- Card de Calorias -->
+    <ion-card class="macro-card">
+      <ion-card-header>
+        <div class="card-title-row">
+          <div class="icon-box calories">
+            <ion-icon name="flame"></ion-icon>
+          </div>
+          <div class="title-text">
+            <ion-card-title>Calorias</ion-card-title>
+            <ion-card-subtitle>Meta diária</ion-card-subtitle>
+          </div>
+          <ion-icon name="information-circle-outline" class="info-icon"></ion-icon>
+        </div>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-progress-bar [value]="getProgress(dailySummary.caloriesConsumed, dailySummary.caloriesGoal)" color="success"></ion-progress-bar>
+        <div class="stats-row">
+          <span><strong>{{ dailySummary.caloriesConsumed }}</strong> Consumidas</span>
+          <span><strong>{{ dailySummary.caloriesGoal }}</strong> Meta</span>
+          <span class="remaining">{{ dailySummary.caloriesGoal - dailySummary.caloriesConsumed }} Restantes</span>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Card de Macronutrientes -->
+    <ion-card class="macro-card">
+      <ion-card-header>
+        <ion-card-title>Macronutrientes</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        
+        <!-- Carboidratos -->
+        <div class="macro-item">
+          <div class="macro-header">
+            <div class="macro-label">
+              <ion-icon name="flash" color="warning"></ion-icon>
+              <span>Carboidratos</span>
+            </div>
+            <span class="macro-value">{{ dailySummary.carbsConsumed }} / {{ dailySummary.carbsGoal }} g</span>
+          </div>
+          <ion-progress-bar [value]="getProgress(dailySummary.carbsConsumed, dailySummary.carbsGoal)" color="success"></ion-progress-bar>
+          <span class="percent">{{ getProgress(dailySummary.carbsConsumed, dailySummary.carbsGoal) * 100 | number:'1.0-0' }}%</span>
+        </div>
+
+        <!-- Proteínas -->
+        <div class="macro-item">
+          <div class="macro-header">
+            <div class="macro-label">
+              <ion-icon name="barbell" color="danger"></ion-icon>
+              <span>Proteínas</span>
+            </div>
+            <span class="macro-value">{{ dailySummary.proteinConsumed }} / {{ dailySummary.proteinGoal }} g</span>
+          </div>
+          <ion-progress-bar [value]="getProgress(dailySummary.proteinConsumed, dailySummary.proteinGoal)" color="success"></ion-progress-bar>
+          <span class="percent">{{ getProgress(dailySummary.proteinConsumed, dailySummary.proteinGoal) * 100 | number:'1.0-0' }}%</span>
+        </div>
+
+        <!-- Gorduras -->
+        <div class="macro-item">
+          <div class="macro-header">
+            <div class="macro-label">
+              <ion-icon name="water" color="tertiary"></ion-icon>
+              <span>Gorduras</span>
+            </div>
+            <span class="macro-value">{{ dailySummary.fatConsumed }} / {{ dailySummary.fatGoal }} g</span>
+          </div>
+          <ion-progress-bar [value]="getProgress(dailySummary.fatConsumed, dailySummary.fatGoal)" color="success"></ion-progress-bar>
+          <span class="percent">{{ getProgress(dailySummary.fatConsumed, dailySummary.fatGoal) * 100 | number:'1.0-0' }}%</span>
+        </div>
+
+      </ion-card-content>
+    </ion-card>
   </div>
 
-  <!-- Lista de alimentos -->
-  <ion-list *ngIf="filteredAlimentos.length > 0">
-    <ion-item *ngFor="let alimento of filteredAlimentos">
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title>{{ alimento.description }}</ion-card-title>
-          <ion-card-subtitle>{{ alimento.category }}</ion-card-subtitle>
-        </ion-card-header>
+  <!-- ================= VISTA: BUSCAR ================= -->
+  <div *ngIf="viewMode === 'buscar'" class="content-wrapper fade-in">
+    
+    <div class="search-container">
+      <ion-searchbar 
+        placeholder="Buscar alimentos..." 
+        [(ngModel)]="searchQuery" 
+        (ionInput)="onSearch()"
+        animated="true"
+        show-cancel-button="focus">
+      </ion-searchbar>
+    </div>
 
-        <ion-card-content>
-          <div class="nutriente-info">
-            <div class="info-item">
-              <ion-icon name="flame" color="danger"></ion-icon>
-              <span>Calorias: {{ alimento.energy_kcal | number:'1.0-2' }} kcal</span>
-            </div>
-            <div class="info-item">
-              <ion-icon name="barbell" color="success"></ion-icon>
-              <span>Proteínas: {{ alimento.protein_g | number:'1.0-2' }} g</span>
-            </div>
-            <div class="info-item">
-              <ion-icon name="pulse" color="tertiary"></ion-icon>
-              <span>Carboidratos: {{ alimento.carbohydrate_g | number:'1.0-2' }} g</span>
-            </div>
-            <div class="info-item">
-              <ion-icon name="nutrition" color="warning"></ion-icon>
-              <span>Gorduras: {{ alimento.lipid_g | number:'1.0-2' }} g</span>
-            </div>
-            <div class="info-item">
-              <ion-icon name="leaf" color="secondary"></ion-icon>
-              <span>Fibras: {{ alimento.fiber_g | number:'1.0-2' }} g</span>
-            </div>
+    <!-- Resultados da Busca -->
+    <ion-list *ngIf="filteredAlimentos.length > 0" class="food-list">
+      <div *ngFor="let alimento of filteredAlimentos">
+        
+        <!-- Card de Alimento -->
+        <ion-card class="food-card">
+          <div class="food-header">
+            <h2>{{ alimento.description }}</h2>
+            <ion-chip color="light" class="category-chip">{{ alimento.category }}</ion-chip>
           </div>
 
-          
-          <!-- Ajuste de quantidade -->
-          <ion-item>
-            <ion-label>Quantidade:</ion-label>
-            <div class="quantity-container">
-              <ion-input
-                type="number"
-                [(ngModel)]="alimento.quantity"
-                (ionChange)="updateNutritionalValues(alimento)">
-              </ion-input>
-              <ion-label class="unit-label">{{ alimento.unit }}</ion-label>
+          <ion-card-content>
+            <!-- Grid de Nutrientes -->
+            <ion-grid class="nutrient-grid">
+              <ion-row>
+                <ion-col size="12" class="calories-highlight">
+                  <ion-icon name="flame" color="danger"></ion-icon>
+                  Calorias: <strong>{{ alimento.energy_kcal | number:'1.0-1' }} kcal</strong>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="6" class="nutrient-col">
+                  <ion-icon name="barbell" color="primary"></ion-icon>
+                  <div>
+                    <span>Proteínas</span>
+                    <strong>{{ alimento.protein_g | number:'1.0-1' }}g</strong>
+                  </div>
+                </ion-col>
+                <ion-col size="6" class="nutrient-col">
+                  <ion-icon name="flash" color="warning"></ion-icon>
+                  <div>
+                    <span>Carbo</span>
+                    <strong>{{ alimento.carbohydrate_g | number:'1.0-1' }}g</strong>
+                  </div>
+                </ion-col>
+                <ion-col size="6" class="nutrient-col">
+                  <ion-icon name="water" color="secondary"></ion-icon>
+                  <div>
+                    <span>Gorduras</span>
+                    <strong>{{ alimento.lipid_g | number:'1.0-1' }}g</strong>
+                  </div>
+                </ion-col>
+                <ion-col size="6" class="nutrient-col">
+                  <ion-icon name="leaf" color="success"></ion-icon>
+                  <div>
+                    <span>Fibras</span>
+                    <strong>{{ alimento.fiber_g | number:'1.0-1' }}g</strong>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+
+            <div class="divider"></div>
+
+            <!-- Input de Quantidade e Botão -->
+            <div class="action-row">
+              <div class="quantity-input">
+                <ion-label>Qtd:</ion-label>
+                <ion-input 
+                  type="number" 
+                  [(ngModel)]="alimento.quantity" 
+                  (ionChange)="updateNutritionalValues(alimento)"
+                  class="custom-input">
+                </ion-input>
+                <span>{{ alimento.unit }}</span>
+              </div>
+
+              <ion-button class="add-btn" (click)="addToMeal(alimento)">
+                <ion-icon name="add" slot="start"></ion-icon>
+                Adicionar
+              </ion-button>
             </div>
-          </ion-item>
 
-          <!-- Botão para adicionar alimento à refeição -->
-          <ion-button expand="block" (click)="addToMeal(alimento)">
-            Adicionar à Refeição
-          </ion-button>
-        </ion-card-content>
-      </ion-card>
-    </ion-item>
-  </ion-list>
+          </ion-card-content>
+        </ion-card>
 
-  <!-- Mensagem quando não há resultados -->
-  <div *ngIf="filteredAlimentos.length === 0 && searchQuery.trim() !== ''" class="no-results">
-    <p>Nenhum alimento encontrado para "{{ searchQuery }}".</p>
+      </div>
+    </ion-list>
+
+    <!-- Estado Vazio -->
+    <div *ngIf="filteredAlimentos.length === 0 && searchQuery.trim() !== ''" class="empty-state">
+      <ion-icon name="search-outline"></ion-icon>
+      <p>Nenhum alimento encontrado para "{{ searchQuery }}"</p>
+    </div>
+
+    <!-- Lista Inicial (Opcional, quando não está buscando) -->
+    <div *ngIf="filteredAlimentos.length === 0 && searchQuery.trim() === ''" class="empty-state">
+      <ion-icon name="restaurant-outline"></ion-icon>
+      <p>Digite para buscar um alimento</p>
+    </div>
+
   </div>
+
+  <!-- Botão Flutuante (apenas um toque extra) -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="viewMode === 'resumo'">
+    <ion-fab-button color="secondary" (click)="viewMode = 'buscar'">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
 </ion-content>

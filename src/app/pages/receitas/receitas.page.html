@@ -1,25 +1,88 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Receitas</ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" icon="arrow-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Receitas Saudáveis</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-searchbar [(ngModel)]="searchQuery" (ionInput)="onSearch()"></ion-searchbar>
+<ion-content class="receitas-page">
+  
+  <!-- Barra de Pesquisa -->
+  <div class="search-section">
+    <ion-searchbar 
+      [(ngModel)]="searchQuery" 
+      (ionInput)="onSearch()"
+      placeholder="Buscar receitas..."
+      animated="true"
+      show-cancel-button="focus">
+    </ion-searchbar>
+  </div>
 
-  <ion-list>
-    <ion-item *ngFor="let receita of receitas">
-      <ion-avatar slot="start">
-        <ion-img [src]="receita.image"></ion-img>
-      </ion-avatar>
-      <ion-label>
-        <h2>{{ receita.title }}</h2>
-        <p>{{ receita.readyInMinutes }} minutos</p>
-      </ion-label>
-      <ion-button fill="clear" (click)="viewRecipe(receita)">Ver Receita</ion-button>
-    </ion-item>
-  </ion-list>
+  <div class="content-container">
+    
+    <!-- Filtros Rápidos (Opcional, apenas visual por enquanto) -->
+    <div class="tags-scroll">
+      <ion-chip outline color="primary">Tudo</ion-chip>
+      <ion-chip outline color="medium">Café da Manhã</ion-chip>
+      <ion-chip outline color="medium">Low Carb</ion-chip>
+      <ion-chip outline color="medium">Vegano</ion-chip>
+    </div>
 
-  <div *ngIf="isLoading">Carregando...</div>
-  <div *ngIf="errorMessage">{{ errorMessage }}</div>
+    <!-- Estado de Carregamento (Skeleton) -->
+    <div *ngIf="isLoading" class="loading-state">
+      <div class="skeleton-card" *ngFor="let i of [1,2,3,4]">
+        <ion-skeleton-text animated style="width: 100%; height: 150px;"></ion-skeleton-text>
+        <div style="padding: 10px;">
+          <ion-skeleton-text animated style="width: 60%; height: 20px;"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 40%; height: 15px; margin-top: 5px;"></ion-skeleton-text>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lista de Receitas -->
+    <div *ngIf="!isLoading && receitas.length > 0" class="recipes-grid">
+      <ion-card *ngFor="let receita of receitas" class="recipe-card" button (click)="viewRecipe(receita)">
+        
+        <div class="image-container">
+          <img [src]="receita.image" alt="{{ receita.title }}" onerror="this.src='assets/icon/favicon.png'"/>
+          <div class="time-badge" *ngIf="receita.readyInMinutes">
+            <ion-icon name="time-outline"></ion-icon> {{ receita.readyInMinutes }} min
+          </div>
+        </div>
+
+        <ion-card-content>
+          <h3 class="recipe-title">{{ receita.title }}</h3>
+          
+          <div class="recipe-meta">
+            <div class="meta-item">
+              <ion-icon name="restaurant-outline"></ion-icon>
+              <span>{{ receita.servings || 2 }} porções</span>
+            </div>
+            <!-- Botão Ver Mais Discreto -->
+            <div class="action-icon">
+              <ion-icon name="arrow-forward-circle-outline"></ion-icon>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Estado Vazio -->
+    <div *ngIf="!isLoading && receitas.length === 0 && errorMessage === ''" class="empty-state">
+      <div class="icon-box">
+        <ion-icon name="search"></ion-icon>
+      </div>
+      <h3>Nenhuma receita encontrada</h3>
+      <p>Tente buscar por "frango", "salada" ou "aveia".</p>
+    </div>
+
+    <!-- Estado de Erro -->
+    <div *ngIf="errorMessage" class="error-state">
+      <ion-icon name="alert-circle-outline" color="danger"></ion-icon>
+      <p>{{ errorMessage }}</p>
+    </div>
+
+  </div>
 </ion-content>

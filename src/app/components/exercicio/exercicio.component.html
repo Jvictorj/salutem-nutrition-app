@@ -1,0 +1,36 @@
+<div class="workout-card" *ngIf="treino">
+  
+  <div class="card-header-row">
+    <!-- Ícone do Treino -->
+    <div class="workout-icon-box">
+      <!-- Ícone específico para Fullbody ou ícone do Ionic -->
+      <img *ngIf="treino.type === 'fullbody'" src="assets/icon/favicon.png" alt="icon"> 
+      <ion-icon *ngIf="treino.type !== 'fullbody'" [name]="treino.iconName || 'barbell-outline'"></ion-icon>
+    </div>
+    
+    <div class="workout-info">
+      <h3>{{ treino.title }}</h3>
+      <span class="badge" [class.beginner]="treino.level === 'Iniciante'">
+        {{ treino.level }}
+      </span>
+    </div>
+  </div>
+
+  <p class="description">{{ treino.description }}</p>
+
+  <div class="meta-info">
+    <div class="meta-item">
+      <ion-icon name="flash-outline"></ion-icon>
+      <span>{{ treino.exerciseCount }} Exercícios</span>
+    </div>
+    <div class="meta-item">
+      <ion-icon name="time-outline"></ion-icon>
+      <span>{{ treino.duration }} mins</span>
+    </div>
+  </div>
+
+  <ion-button expand="block" class="btn-see-more" fill="solid">
+    VEJA MAIS <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+  </ion-button>
+
+</div>

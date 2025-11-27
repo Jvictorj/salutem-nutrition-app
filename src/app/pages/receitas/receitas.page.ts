@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ReceitasService } from '../../service/services/receitas.service';
+import { ReceitasService } from '../../services/api/receitas.service'; // Ajuste o caminho se necessário
 import { ModalController } from '@ionic/angular';
-import { ReceitaDetailComponent } from '../../component/components/receita-detail/receita-detail.component'; // Importar o modal
+import { ReceitaDetailComponent } from '../../components/receita-detail/receita-detail.component';
 
 @Component({
   selector: 'app-receitas',
@@ -9,59 +9,73 @@ import { ReceitaDetailComponent } from '../../component/components/receita-detai
   styleUrls: ['./receitas.page.scss'],
 })
 export class ReceitasPage implements OnInit {
-  receitas: any[] = []; // Lista de receitas
-  searchQuery: string = ''; // Termo de pesquisa
-  isLoading: boolean = false; // Indicador de carregamento
-  errorMessage: string = ''; // Mensagem de erro
+  
+  receitas: any[] = [];
+  searchQuery: string = '';
+  isLoading: boolean = false;
+  errorMessage: string = '';
 
   constructor(
     private receitasService: ReceitasService,
-    private modalController: ModalController // Injeção do ModalController
+    private modalController: ModalController
   ) {}
 
   ngOnInit() {
-    // Carregar receitas iniciais ou recomendadas
+    // Carrega sugestões iniciais (pode ser 'saudável', 'salada', etc.)
+    this.searchQuery = 'saudável'; 
     this.getReceitas();
   }
 
-  // Função para buscar receitas
   getReceitas() {
+    if (!this.searchQuery.trim()) return;
+
     this.isLoading = true;
     this.errorMessage = '';
+    this.receitas = []; // Limpa lista anterior para mostrar skeleton
+
     this.receitasService.getReceitas(this.searchQuery).subscribe(
-      (data) => {
+      (data: any) => {
         this.isLoading = false;
-        this.receitas = data.results; // Supondo que a resposta tenha uma chave 'results'
+        // A API Spoonacular geralmente retorna em 'results'
+        this.receitas = data.results || [];
+        
+        if (this.receitas.length === 0) {
+          // Nenhum resultado encontrado
+        }
       },
       (error) => {
         this.isLoading = false;
-        this.errorMessage = 'Erro ao carregar receitas. Tente novamente mais tarde.';
-        console.error(error);
+        this.errorMessage = 'Não foi possível carregar as receitas. Verifique sua conexão.';
+        console.error('Erro Receitas:', error);
       }
     );
   }
 
-  // Função para ser chamada quando o usuário digitar na barra de pesquisa
   onSearch() {
-    if (this.searchQuery.trim() === '') {
+    // Debounce manual simples: só busca se tiver texto
+    if (this.searchQuery.trim().length > 2) {
+      this.getReceitas();
+    } else if (this.searchQuery.trim() === '') {
       this.receitas = [];
-    } else {
-      this.getReceitas(); // Recarrega as receitas com a pesquisa
     }
   }
 
-  // Função para abrir o modal com os detalhes da receita
   async viewRecipe(receita: any) {
+    // Busca detalhes completos antes de abrir (se a API exigir endpoint de info detalhada)
+    // Se a lista já tiver tudo, pode passar direto.
+    // Geralmente na lista vem só ID, Title e Image.
+    // Se precisar de detalhes (instruções), talvez precise chamar o serviço aqui pelo ID.
+    
+    // Supondo que precise buscar detalhes:
+    // this.isLoading = true;
+    // this.receitasService.getRecipeDetails(receita.id).subscribe(...)
+    
+    // Por enquanto, passamos o objeto atual para o modal
     const modal = await this.modalController.create({
-      component: ReceitaDetailComponent, // O componente do modal
-      componentProps: { receita: receita } // Passando a receita como propriedade para o modal
+      component: ReceitaDetailComponent,
+      componentProps: { receita: receita }
     });
 
     await modal.present();
-
-    // Optional: Captura o retorno ao fechar o modal
-    const { data } = await modal.onDidDismiss();
-    console.log('Retorno do modal', data);
   }
 }
-

@@ -1,108 +1,160 @@
-// For information on how to create your own theme, please see:
+// Ionic Variables and Theming. For more info, please see:
 // http://ionicframework.com/docs/theming/
 
 :root {
-    //ALOE
-	--ion-color-primary: #A7B59B; //ALOE
-	--ion-color-primary-rgb: 167,181,155;
-	--ion-color-primary-contrast: #000000;
-	--ion-color-primary-contrast-rgb: 0,0,0;
-	--ion-color-primary-shade: #939f88;
-	--ion-color-primary-tint: #b0bca5;
+  /** * PALETA PRINCIPAL (Customizada)
+   * Cores baseadas no tema "Sage Green / Nature"
+   */
 
-    //DESERT SAND
-	--ion-color-secondary: #F8F3E5; //DESERT SAND
-	--ion-color-secondary-rgb: 248,243,229;
-	--ion-color-secondary-contrast: #000000;
-	--ion-color-secondary-contrast-rgb: 0,0,0;
-	--ion-color-secondary-shade: #dad6ca;
-	--ion-color-secondary-tint: #f9f4e8;
+  /* ALOE (Verde Sálvia Principal) */
+  --ion-color-primary: #A7B59B;
+  --ion-color-primary-rgb: 167, 181, 155;
+  --ion-color-primary-contrast: #000000;
+  --ion-color-primary-contrast-rgb: 0, 0, 0;
+  --ion-color-primary-shade: #939f88;
+  --ion-color-primary-tint: #b0bca5;
 
-    //MIST
-	--ion-color-tertiary: #E0E3D2;
-	--ion-color-tertiary-rgb: 224,227,210; //MIST
-	--ion-color-tertiary-contrast: #000000;
-	--ion-color-tertiary-contrast-rgb: 0,0,0;
-	--ion-color-tertiary-shade: #c5c8b9;
-	--ion-color-tertiary-tint: #e3e6d7;
+  /* DESERT SAND (Creme/Areia) */
+  --ion-color-secondary: #F8F3E5;
+  --ion-color-secondary-rgb: 248, 243, 229;
+  --ion-color-secondary-contrast: #000000;
+  --ion-color-secondary-contrast-rgb: 0, 0, 0;
+  --ion-color-secondary-shade: #dad6ca;
+  --ion-color-secondary-tint: #f9f4e8;
 
-    //TEAK
-	--ion-color-quart: #AE7241; //TEAK
-	--ion-color-quart-rgb: 174,114,65;
-	--ion-color-quart-contrast: #000000;
-	--ion-color-quart-contrast-rgb: 0,0,0;
-	--ion-color-quart-shade: #996439;
-	--ion-color-quart-tint: #b68054;
+  /* MIST (Cinza Esverdeado Claro) */
+  --ion-color-tertiary: #E0E3D2;
+  --ion-color-tertiary-rgb: 224, 227, 210;
+  --ion-color-tertiary-contrast: #000000;
+  --ion-color-tertiary-contrast-rgb: 0, 0, 0;
+  --ion-color-tertiary-shade: #c5c8b9;
+  --ion-color-tertiary-tint: #e3e6d7;
 
-    //ARMY
-	--ion-color-quint: #3D542D; //ARMY
-	--ion-color-quint-rgb: 61,84,45;
-	--ion-color-quint-contrast: #ffffff;
-	--ion-color-quint-contrast-rgb: 255,255,255;
-	--ion-color-quint-shade: #364a28;
-	--ion-color-quint-tint: #506542;
+  /**
+   * CORES EXTRAS (Personalizadas)
+   * Adicione class="ion-color-quart" etc. nos componentes para usar
+   */
 
-	//
-	--ion-color-sext: #41ae72;
-	--ion-color-sext-rgb: 65,174,114;
-	--ion-color-sext-contrast: #000000;
-	--ion-color-sext-contrast-rgb: 0,0,0;
-	--ion-color-sext-shade: #399964;
-	--ion-color-sext-tint: #54b680;
+  /* TEAK (Marrom Madeira) */
+  --ion-color-quart: #AE7241;
+  --ion-color-quart-rgb: 174, 114, 65;
+  --ion-color-quart-contrast: #000000;
+  --ion-color-quart-contrast-rgb: 0, 0, 0;
+  --ion-color-quart-shade: #996439;
+  --ion-color-quart-tint: #b68054;
 
-    //CACTUS
-	 --ion-color-cactus: #367F50; //CACTUS
-	 --ion-color-cactus-rgb: 54,127,80;
-	 --ion-color-cactus-contrast: #ffffff;
-	 --ion-color-cactus-contrast-rgb: 255,255,255;
-	 --ion-color-cactus-shade: #307046;
-	 --ion-color-cactus-tint: #4a8c62;
+  /* ARMY (Verde Militar Escuro) */
+  --ion-color-quint: #3D542D;
+  --ion-color-quint-rgb: 61, 84, 45;
+  --ion-color-quint-contrast: #ffffff;
+  --ion-color-quint-contrast-rgb: 255, 255, 255;
+  --ion-color-quint-shade: #364a28;
+  --ion-color-quint-tint: #506542;
 
-	// 
-	--ion-color-success: #2dd55b;
-	--ion-color-success-rgb: 45,213,91;
-	--ion-color-success-contrast: #000000;
-	--ion-color-success-contrast-rgb: 0,0,0;
-	--ion-color-success-shade: #28bb50;
-	--ion-color-success-tint: #42d96b;
-	// 
-	--ion-color-warning: #ffc409;
-	--ion-color-warning-rgb: 255,196,9;
-	--ion-color-warning-contrast: #000000;
-	--ion-color-warning-contrast-rgb: 0,0,0;
-	--ion-color-warning-shade: #e0ac08;
-	--ion-color-warning-tint: #ffca22;
+  /* JADE (Verde Médio Vibrante) */
+  --ion-color-sext: #41ae72;
+  --ion-color-sext-rgb: 65, 174, 114;
+  --ion-color-sext-contrast: #000000;
+  --ion-color-sext-contrast-rgb: 0, 0, 0;
+  --ion-color-sext-shade: #399964;
+  --ion-color-sext-tint: #54b680;
 
-	// 
-	--ion-color-danger: #c5000f;
-	--ion-color-danger-rgb: 197,0,15;
-	--ion-color-danger-contrast: #ffffff;
-	--ion-color-danger-contrast-rgb: 255,255,255;
-	--ion-color-danger-shade: #ad000d;
-	--ion-color-danger-tint: #cb1a27;
+  /* CACTUS (Verde Floresta) */
+  --ion-color-cactus: #367F50;
+  --ion-color-cactus-rgb: 54, 127, 80;
+  --ion-color-cactus-contrast: #ffffff;
+  --ion-color-cactus-contrast-rgb: 255, 255, 255;
+  --ion-color-cactus-shade: #307046;
+  --ion-color-cactus-tint: #4a8c62;
 
-	// 
-	--ion-color-light: #ffffff;
-	--ion-color-light-rgb: 246,248,252;
-	--ion-color-light-contrast: #000000;
-	--ion-color-light-contrast-rgb: 0,0,0;
-	--ion-color-light-shade: #d8dade;
-	--ion-color-light-tint: #f7f9fc;
+  /**
+   * ESTADOS DO SISTEMA (Padrão Ionic)
+   * Cores funcionais para alertas e mensagens
+   */
 
-	// 
-	--ion-color-medium: #5f5f5f;
-	--ion-color-medium-rgb: 95,95,95;
-	--ion-color-medium-contrast: #ffffff;
-	--ion-color-medium-contrast-rgb: 255,255,255;
-	--ion-color-medium-shade: #545454;
-	--ion-color-medium-tint: #6f6f6f;
+  /* Success (Verde Sucesso) */
+  --ion-color-success: #2dd55b;
+  --ion-color-success-rgb: 45, 213, 91;
+  --ion-color-success-contrast: #000000;
+  --ion-color-success-contrast-rgb: 0, 0, 0;
+  --ion-color-success-shade: #28bb50;
+  --ion-color-success-tint: #42d96b;
 
-	// 
-	--ion-color-dark: #2f2f2f;
-	--ion-color-dark-rgb: 47,47,47;
-	--ion-color-dark-contrast: #ffffff;
-	--ion-color-dark-contrast-rgb: 255,255,255;
-	--ion-color-dark-shade: #292929;
-	--ion-color-dark-tint: #444444;
+  /* Warning (Amarelo Alerta) */
+  --ion-color-warning: #ffc409;
+  --ion-color-warning-rgb: 255, 196, 9;
+  --ion-color-warning-contrast: #000000;
+  --ion-color-warning-contrast-rgb: 0, 0, 0;
+  --ion-color-warning-shade: #e0ac08;
+  --ion-color-warning-tint: #ffca22;
 
+  /* Danger (Vermelho Erro) */
+  --ion-color-danger: #c5000f;
+  --ion-color-danger-rgb: 197, 0, 15;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #ad000d;
+  --ion-color-danger-tint: #cb1a27;
+
+  /* Light (Fundo Claro) */
+  --ion-color-light: #ffffff;
+  --ion-color-light-rgb: 255, 255, 255;
+  --ion-color-light-contrast: #000000;
+  --ion-color-light-contrast-rgb: 0, 0, 0;
+  --ion-color-light-shade: #e0e0e0;
+  --ion-color-light-tint: #ffffff;
+
+  /* Medium (Cinza Médio) */
+  --ion-color-medium: #5f5f5f;
+  --ion-color-medium-rgb: 95, 95, 95;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-contrast-rgb: 255, 255, 255;
+  --ion-color-medium-shade: #545454;
+  --ion-color-medium-tint: #6f6f6f;
+
+  /* Dark (Texto/Fundo Escuro) */
+  --ion-color-dark: #2f2f2f;
+  --ion-color-dark-rgb: 47, 47, 47;
+  --ion-color-dark-contrast: #ffffff;
+  --ion-color-dark-contrast-rgb: 255, 255, 255;
+  --ion-color-dark-shade: #292929;
+  --ion-color-dark-tint: #444444;
+}
+
+// Classes utilitárias para usar as cores extras no HTML
+// Ex: class="ion-color-cactus"
+.ion-color-quart {
+  --ion-color-base: var(--ion-color-quart);
+  --ion-color-base-rgb: var(--ion-color-quart-rgb);
+  --ion-color-contrast: var(--ion-color-quart-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-quart-contrast-rgb);
+  --ion-color-shade: var(--ion-color-quart-shade);
+  --ion-color-tint: var(--ion-color-quart-tint);
+}
+
+.ion-color-quint {
+  --ion-color-base: var(--ion-color-quint);
+  --ion-color-base-rgb: var(--ion-color-quint-rgb);
+  --ion-color-contrast: var(--ion-color-quint-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-quint-contrast-rgb);
+  --ion-color-shade: var(--ion-color-quint-shade);
+  --ion-color-tint: var(--ion-color-quint-tint);
+}
+
+.ion-color-sext {
+  --ion-color-base: var(--ion-color-sext);
+  --ion-color-base-rgb: var(--ion-color-sext-rgb);
+  --ion-color-contrast: var(--ion-color-sext-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-sext-contrast-rgb);
+  --ion-color-shade: var(--ion-color-sext-shade);
+  --ion-color-tint: var(--ion-color-sext-tint);
+}
+
+.ion-color-cactus {
+  --ion-color-base: var(--ion-color-cactus);
+  --ion-color-base-rgb: var(--ion-color-cactus-rgb);
+  --ion-color-contrast: var(--ion-color-cactus-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-cactus-contrast-rgb);
+  --ion-color-shade: var(--ion-color-cactus-shade);
+  --ion-color-tint: var(--ion-color-cactus-tint);
 }

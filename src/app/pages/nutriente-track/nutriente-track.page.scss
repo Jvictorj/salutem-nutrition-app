@@ -1,126 +1,292 @@
-
-
-ion-content {
-  --background: #f9f9f9; /* Fundo claro para contraste */
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Centraliza o conteúdo */
-  justify-content: flex-start;
-}
-
-.search-container {
-  margin-bottom: 20px;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-ion-searchbar {
-  --background: #ffffff;
-  --color: #333;
-  --placeholder-color: #999;
-  --border-radius: 20px;
-  width: 80%;
-}
-
-ion-card {
-  margin-bottom: 15px;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 500px; /* Limita a largura máxima para não ficar grande demais */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-ion-card-header {
-  background-color: var(--ion-color-primary);
-  color: white;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-  padding: 15px;
-  text-align: center; /* Centraliza o título */
-}
-
-ion-card-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-ion-card-subtitle {
-  font-size: 1.1rem;
-  color: var(--ion-color-secondary);
-}
+// Cores do Tema
+$sage-green: #A7B59B;
+$sage-dark: #8c9e82;
+$text-dark: #333;
+$bg-light: #f4f6f5;
 
 ion-toolbar {
+  --background: #{$sage-green};
+  --color: white;
+}
+
+.header-summary {
+  background-color: $sage-green;
   display: flex;
-  justify-content: center;  /* Alinha o conteúdo horizontalmente */
-  align-items: center;      /* Alinha o conteúdo verticalmente */
+  justify-content: space-around;
+  padding: 10px 0 20px;
+  color: white;
+
+  .summary-item {
+    text-align: center;
+    
+    h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin: 0;
+    }
+    p {
+      margin: 0;
+      font-size: 0.8rem;
+      opacity: 0.9;
+    }
+  }
 }
 
-ion-title {
-  text-align: center;       /* Centraliza o texto */
-  width: 100%;              /* Faz o título ocupar toda a largura disponível */
-  color: var(--ion-color-secondary);
+.segment-container {
+  background-color: $bg-light;
+  padding: 10px 16px;
+  border-radius: 20px 20px 0 0;
+  margin-top: -15px; // Efeito de sobreposição
+  position: relative;
+  z-index: 10;
+
+  ion-segment {
+    --background: #fff;
+    border-radius: 8px;
+    padding: 2px;
+    
+    ion-segment-button {
+      --indicator-color: #{$sage-green};
+      --color-checked: #fff;
+      --color: #666;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+  }
 }
 
-
-.nutriente-info {
-  padding: 20px;
-  text-align: center; /* Centraliza as informações dentro do cartão */
+.nutriente-page {
+  --background: #{$bg-light};
 }
 
-.info-item {
-  display: flex;
-  align-items: center;
-  justify-content: center; /* Centraliza as informações horizontalmente */
-  margin-bottom: 15px;
-  font-size: 1.2rem;
+.content-wrapper {
+  padding: 16px;
 }
 
-.info-item ion-icon {
-  margin-right: 15px; /* Adiciona um espaço maior entre o ícone e o texto */
-  font-size: 1.5rem; /* Aumenta o tamanho do ícone */
+// Cards de Resumo
+.macro-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  margin: 0 0 16px;
+  background: white;
+
+  ion-card-header {
+    padding-bottom: 10px;
+  }
+
+  ion-progress-bar {
+    height: 8px;
+    border-radius: 4px;
+    margin: 10px 0;
+    --progress-background: #{$sage-green};
+  }
+
+  // Estilos do Card de Calorias
+  .card-title-row {
+    display: flex;
+    align-items: center;
+    
+    .icon-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #{$sage-green};
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 12px;
+      
+      ion-icon { color: white; font-size: 1.2rem; }
+    }
+
+    .title-text {
+      flex: 1;
+      ion-card-title { font-size: 1.1rem; color: $text-dark; font-weight: 700; }
+      ion-card-subtitle { font-size: 0.8rem; }
+    }
+
+    .info-icon { font-size: 1.2rem; color: #ccc; }
+  }
+
+  .stats-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: #666;
+    
+    strong { color: $text-dark; font-size: 0.9rem; }
+    .remaining { color: $sage-green; font-weight: 700; }
+  }
+
+  // Estilos da Lista de Macros
+  .macro-item {
+    margin-bottom: 15px;
+
+    .macro-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      
+      .macro-label {
+        display: flex;
+        align-items: center;
+        font-weight: 600;
+        color: $text-dark;
+        
+        ion-icon { 
+          margin-right: 8px; 
+          background: #f0f0f0; 
+          padding: 4px; 
+          border-radius: 50%;
+          font-size: 0.9rem;
+        }
+      }
+      
+      .macro-value { font-size: 0.8rem; color: #666; }
+    }
+
+    .percent {
+      display: block;
+      text-align: right;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: $text-dark;
+      margin-top: 2px;
+    }
+  }
 }
 
-.info-item .quantity {
-  display: flex;
-  align-items: center; /* Alinha o número e o "g" na mesma linha */
-  justify-content: center; /* Centraliza horizontalmente */
+// Estilos da Busca
+.search-container {
+  margin-bottom: 16px;
+  ion-searchbar {
+    --box-shadow: none;
+    --background: #fff;
+    border: 1px solid #eee;
+    border-radius: 25px;
+    padding: 0;
+  }
 }
 
-.info-item .quantity span {
-  margin-left: 5px; /* Reduz o espaço entre o número e o "g" */
+.food-card {
+  margin: 0 0 16px;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  overflow: visible; // Permite que elementos saiam se necessário
+
+  .food-header {
+    background-color: $sage-green;
+    padding: 12px 16px;
+    border-radius: 16px 16px 0 0;
+    
+    h2 {
+      margin: 0 0 5px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .category-chip {
+      height: 20px;
+      font-size: 0.7rem;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      margin: 0;
+    }
+  }
+
+  .nutrient-grid {
+    padding: 10px 0;
+
+    .calories-highlight {
+      display: flex;
+      align-items: center;
+      background: #fff5f5;
+      padding: 8px 12px;
+      border-radius: 8px;
+      color: $text-dark;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+
+      ion-icon { margin-right: 8px; font-size: 1.2rem; }
+      strong { margin-left: auto; font-size: 1rem; }
+    }
+
+    .nutrient-col {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+
+      ion-icon { font-size: 1.2rem; margin-right: 8px; }
+      
+      div {
+        display: flex;
+        flex-direction: column;
+        span { font-size: 0.7rem; color: #888; }
+        strong { font-size: 0.85rem; color: $text-dark; }
+      }
+    }
+  }
+
+  .divider {
+    height: 1px;
+    background: #f0f0f0;
+    margin: 5px 0 15px;
+  }
+
+  .action-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .quantity-input {
+      display: flex;
+      align-items: center;
+      background: #f9f9f9;
+      padding: 0 10px;
+      border-radius: 8px;
+      border: 1px solid #eee;
+
+      ion-label { font-size: 0.8rem; color: #666; margin-right: 5px; }
+      span { font-size: 0.8rem; color: #666; margin-left: 5px; font-weight: 600; }
+      
+      .custom-input {
+        --padding-start: 0;
+        --padding-end: 0;
+        width: 50px;
+        text-align: center;
+        font-weight: 700;
+      }
+    }
+
+    .add-btn {
+      --background: #{$sage-green};
+      --background-activated: #{$sage-dark};
+      --box-shadow: none;
+      font-size: 0.8rem;
+      height: 36px;
+      margin: 0;
+    }
+  }
 }
 
-.no-results {
+.empty-state {
   text-align: center;
-  color: var(--ion-color-medium);
-  margin-top: 20px;
+  padding: 40px 0;
+  color: #ccc;
+  
+  ion-icon { font-size: 4rem; margin-bottom: 10px; opacity: 0.5; }
+  p { font-size: 1rem; }
 }
 
-.no-results p {
-  font-size: 1.2rem;
-  color: #b3b3c1;
+// Animação suave
+.fade-in {
+  animation: fadeIn 0.3s ease-in;
 }
 
-.quantity-container {
-  display: flex;
-  align-items: center; /* Alinha verticalmente os itens */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-
-.quantity-container ion-input {
-  width: auto; /* Faz o input se ajustar ao conteúdo */
-  margin-right: 0; /* Remove margem à direita */
-}
-
-.unit-label {
-  margin-left: 4px; /* Pequeno espaço entre o número e o 'g' */
-  font-size: 1.1rem; /* Ajusta o tamanho do 'g' se necessário */
-}
-

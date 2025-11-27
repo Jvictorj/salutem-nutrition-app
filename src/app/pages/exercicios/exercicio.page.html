@@ -1,0 +1,84 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" icon="arrow-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Rotina de Treino</ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="calendar-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <!-- Painel de Estatísticas -->
+  <div class="stats-panel">
+    <div class="stat-item">
+      <span class="label">Esta semana</span>
+      <div class="value">
+        <ion-icon name="time-outline"></ion-icon> 120 min
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="stat-item">
+      <span class="label">Treinos</span>
+      <div class="value">
+        <ion-icon name="barbell-outline"></ion-icon> 4
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="stat-item">
+      <span class="label">Calorias</span>
+      <div class="value">
+        <ion-icon name="flame-outline"></ion-icon> 840
+      </div>
+    </div>
+  </div>
+</ion-header>
+
+<ion-content class="exercicio-page">
+
+  <!-- Filtros -->
+  <div class="filters-container">
+    <ion-segment scrollable mode="ios" [(ngModel)]="selectedFilter" (ionChange)="filterWorkouts()">
+      <ion-segment-button value="all">
+        <ion-label>Todos</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="fullbody">
+        <ion-label>Corpo Inteiro</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="upper">
+        <ion-label>Superior</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="lower">
+        <ion-label>Inferior</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <div class="section-title">
+    <h2>Treinos Disponíveis</h2>
+  </div>
+
+  <!-- Lista de Treinos (Usando o Componente Refatorado!) -->
+  <ion-list class="workouts-list">
+    <!-- Veja como fica limpo: só chamamos o app-exercicio e passamos o 'treino' -->
+    <app-exercicio *ngFor="let treino of filteredWorkouts" [treino]="treino">
+    </app-exercicio>
+  </ion-list>
+
+  <!-- Seção de Vídeos -->
+  <div *ngIf="videos.length > 0" class="youtube-section">
+    <div class="section-title">
+      <h2>Vídeos de Apoio</h2>
+    </div>
+    
+    <div class="horizontal-scroll">
+      <div *ngFor="let video of videos" class="video-card-mini" (click)="openVideo(video)">
+        <img [src]="video.snippet.thumbnails.medium.url">
+        <p>{{ video.snippet.title | slice:0:30 }}...</p>
+      </div>
+    </div>
+  </div>
+
+</ion-content>

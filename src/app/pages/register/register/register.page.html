@@ -1,0 +1,129 @@
+<ion-content class="register-page">
+  <div class="register-container">
+    
+    <!-- ================= PASSO 1: DADOS DE ACESSO ================= -->
+    <ng-container *ngIf="currentStep === 1">
+      <div class="header-text">
+        <h2>Hey, aqui</h2>
+        <h1>Crie Uma Conta</h1>
+      </div>
+
+      <form [formGroup]="registerFormStep1" (ngSubmit)="goToNextStep()">
+        
+        <ion-item lines="none" class="input-item">
+          <ion-icon slot="start" name="person-outline"></ion-icon>
+          <ion-input label="Nome Completo" label-placement="floating" formControlName="fullName" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item lines="none" class="input-item">
+          <ion-icon slot="start" name="call-outline"></ion-icon>
+          <ion-input label="Celular" label-placement="floating" formControlName="phoneNumber" type="tel"></ion-input>
+        </ion-item>
+
+        <ion-item lines="none" class="input-item">
+          <ion-icon slot="start" name="mail-outline"></ion-icon>
+          <ion-input label="E-mail" label-placement="floating" formControlName="email" type="email"></ion-input>
+        </ion-item>
+
+        <ion-item lines="none" class="input-item">
+          <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+          <ion-input label="Senha" label-placement="floating" formControlName="password" [type]="showPassword ? 'text' : 'password'"></ion-input>
+          <ion-icon slot="end" [name]="showPassword ? 'eye-off-outline' : 'eye-outline'" (click)="togglePasswordVisibility()"></ion-icon>
+        </ion-item>
+
+        <div class="terms-container">
+          <ion-checkbox formControlName="acceptTerms" class="custom-checkbox"></ion-checkbox>
+          <label class="terms-label">
+              Ao continuar você aceita nossa <a href="#">Política de Privacidade</a> e <a href="#">Termos de Uso</a>
+          </label>
+        </div>
+
+        <ion-button class="register-button" expand="block" type="submit" [disabled]="!registerFormStep1.valid">
+          Próximo
+        </ion-button>
+      </form>
+
+      <div class="divider">
+        <span>Ou</span>
+      </div>
+  
+      <div class="social-login">
+        <ion-button fill="clear">
+          <ion-icon slot="icon-only" name="logo-google" color="dark"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear">
+          <ion-icon slot="icon-only" name="logo-facebook" color="dark"></ion-icon>
+        </ion-button>
+      </div>    
+      
+      <div class="login-link">
+        Já Possui Uma Conta? <a routerLink="/login">Login</a>
+      </div>
+    </ng-container>
+
+    <!-- ================= PASSO 2: PERFIL FÍSICO ================= -->
+    <ng-container *ngIf="currentStep === 2">
+      <div class="header-text">
+        <h2>Vamos completar o seu perfil</h2>
+        <p class="subtitle">Nos ajude a saber mais sobre você!</p>
+      </div>
+
+      <form [formGroup]="registerFormStep2" (ngSubmit)="onRegister()">
+        
+        <ion-item lines="none" class="input-item">
+          <ion-icon slot="start" name="male-female-outline"></ion-icon>
+          <ion-select label="Gênero" label-placement="floating" formControlName="gender" interface="popover">
+            <ion-select-option value="male">Masculino</ion-select-option>
+            <ion-select-option value="female">Feminino</ion-select-option>
+            <ion-select-option value="other">Outro</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <!-- Seletor de Data com Modal -->
+        <ion-item lines="none" class="input-item" button="true" id="open-date-modal">
+          <ion-icon slot="start" name="calendar-outline"></ion-icon>
+          <ion-label class="date-label">
+            <span class="label-floating">Data de Nascimento</span>
+            <span class="date-value">{{ selectedDateDisplay || 'Selecionar Data' }}</span>
+          </ion-label>
+        </ion-item>
+
+        <!-- Modal de Data -->
+        <ion-modal trigger="open-date-modal" [initialBreakpoint]="0.5" [breakpoints]="[0, 0.5]">
+          <ng-template>
+            <ion-content>
+              <ion-datetime
+                presentation="date"
+                [showDefaultButtons]="true"
+                doneText="Confirmar"
+                cancelText="Cancelar"
+                (ionChange)="onDateSelected($event)">
+              </ion-datetime>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+        
+        <ion-item lines="none" class="input-item">
+          <ion-icon slot="start" name="barbell-outline"></ion-icon>
+          <ion-input label="Seu Peso" label-placement="floating" formControlName="weight" type="number"></ion-input>
+          <ion-note slot="end">KG</ion-note>
+        </ion-item>
+        
+        <ion-item lines="none" class="input-item">
+          <ion-icon slot="start" name="resize-outline"></ion-icon>
+          <ion-input label="Sua Altura" label-placement="floating" formControlName="height" type="number"></ion-input>
+          <ion-note slot="end">CM</ion-note>
+        </ion-item>
+
+        <ion-button class="register-button" expand="block" type="submit" [disabled]="!registerFormStep2.valid">
+          Finalizar Cadastro
+        </ion-button>
+
+        <ion-button fill="clear" color="medium" size="small" (click)="currentStep = 1" style="margin-top: 10px;">
+          Voltar
+        </ion-button>
+
+      </form>
+    </ng-container>    
+  </div>
+</ion-content>
