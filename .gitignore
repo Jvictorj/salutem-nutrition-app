@@ -68,3 +68,12 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Firebase
+.firebaserc
+firebase.json
+cors.json
+
+# Ionic/Angular environments
+src/environments/environment.ts
+src/environments/environment.prod.ts
