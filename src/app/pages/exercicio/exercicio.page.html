@@ -1,0 +1,133 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Rotina de Treino</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- Botão "Check" para Rotina de Treino -->
+  <div class="routine-container">
+    <ion-button shape="round" class="routine-btn">
+      Check
+    </ion-button>
+  </div>
+
+  <!-- Seção de Próximo Treino -->
+  <div class="section-header">
+    <h2>Próximo Treino</h2>
+    <a class="more-link">Ver mais</a>
+  </div>
+
+  <!-- Cards dos Próximos Treinos -->
+  <ion-list lines="none" class="next-workouts">
+    <ion-item class="workout-item">
+      <ion-avatar slot="start">
+        <img src="/assets/img/fullbody-workout.svg" alt="Fullbody Workout">
+      </ion-avatar>
+      <ion-label>
+        <h3>Fullbody Workout</h3>
+        <p>Hoje, 15:00</p>
+      </ion-label>
+      <ion-toggle slot="end" checked></ion-toggle>
+    </ion-item>
+
+    <ion-item class="workout-item">
+      <ion-avatar slot="start">
+        <img src="/assets/img/upperbody-workout.svg" alt="Upperbody Workout">
+      </ion-avatar>
+      <ion-label>
+        <h3>Upperbody Workout</h3>
+        <p>05 de Junho, 14:00</p>
+      </ion-label>
+      <ion-toggle slot="end"></ion-toggle>
+    </ion-item>
+  </ion-list>
+
+  <!-- Seção de "O que você quer treinar" -->
+  <div class="section-header">
+    <h2>O que você quer treinar</h2>
+  </div>
+
+  <!-- Seção de Vídeos -->
+  <div class="section-header">
+    <h2>Vídeos de Treino</h2>
+  </div>
+
+  <ion-list *ngIf="videos.length > 0" lines="none">
+    <ion-card *ngFor="let video of videos">
+      <ion-img [src]="video.snippet.thumbnails.high.url"></ion-img>
+      <ion-card-header>
+        <ion-card-title>{{ video.snippet.title }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>{{ video.snippet.description }}</p>
+        <ion-button
+          expand="full"
+          color="primary"
+          [href]="'https://www.youtube.com/watch?v=' + video.id.videoId"
+          target="_blank"
+        >
+          Assista o vídeo
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+  <div *ngIf="videos.length === 0">
+    <p>Nenhum vídeo disponível</p>
+  </div>
+
+  <!-- Cards de Exercícios Disponíveis -->
+  <div class="section-header">
+    <h2>Exercícios Disponíveis</h2>
+  </div>
+
+  <ion-list *ngIf="exercises.length > 0" lines="none">
+    <ion-item *ngFor="let exercise of exercises">
+      <ion-avatar slot="start">
+        <img [src]="exercise.imageUrl || '/assets/img/default-exercise.svg'" alt="{{ exercise.name }}">
+      </ion-avatar>
+      <ion-label>
+        <h3>{{ exercise.name }}</h3>
+        <p>{{ exercise.description }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="exercises.length === 0">
+    <p>Nenhum exercício disponível</p>
+  </div>
+
+  <!-- Cards de Treinos Disponíveis -->
+  <ion-card class="training-card">
+    <ion-card-header>
+      <ion-card-title>Treino de corpo inteiro</ion-card-title>
+      <p>11 Exercícios | 32mins</p>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button expand="block" fill="outline">Veja mais</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="training-card">
+    <ion-card-header>
+      <ion-card-title>Treino de inferior do corpo</ion-card-title>
+      <p>12 Exercícios | 40mins</p>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button expand="block" fill="outline">Veja mais</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="training-card">
+    <ion-card-header>
+      <ion-card-title>Treino Abdominal</ion-card-title>
+      <p>14 Exercícios | 20mins</p>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button expand="block" fill="outline">Veja mais</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

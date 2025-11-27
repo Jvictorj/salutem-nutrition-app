@@ -38,7 +38,11 @@ const routes: Routes = [
   {
     path: 'welcome',
     loadChildren: () => import('./pages/welcome-page/welcome/welcome.module').then( m => m.WelcomePageModule)
+  },  {
+    path: 'exercicio',
+    loadChildren: () => import('./pages/exercicio/exercicio.module').then( m => m.ExercicioPageModule)
   },
+
   
 ];
 
