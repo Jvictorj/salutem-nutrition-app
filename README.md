@@ -34,16 +34,15 @@
 
 | Boas-Vindas | Registro | Login |
 |------------|----------|-------|
-| <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/welcome.png?raw=true" height="250"/> | <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/register.png?raw=true" height="250"/> | <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/login.png?raw=true" height="250"/> |
+| <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/welcome.png?raw=true" height="250" width="130"/> | <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/register.png?raw=true" height="250" width="130"/> | <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/login.png?raw=true" height="250" width="130"/> |
 
 | Tela Principal | Informações Nutricionais (Resumo) | Informações Nutricionais (Alimentos) |
 |----------------|------------------------------------|----------------------------------------|
-| <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/Home.png?raw=true" height="250"/> | <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/nutriente-track%20-%20(Resumo).png?raw=true" height="250"/> | <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/nutriente-track%20-%20(Informações).png?raw=true" height="250"/> |
+| <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/Home.png?raw=true" height="250" width="130"/> | <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/nutriente-track%20-%20(Resumo).png?raw=true" height="250" width="130"/> | <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/nutriente-track%20-%20(Informações).png?raw=true" height="250" width="130"/> |
 
 | Tela de Exercícios | IMC | Perfil |
 |--------------------|-----|--------|
-| <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/page-exercicio.png?raw=true" height="250"/> | <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/IMC.png?raw=true" height="250"/> | <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/Perfil.png?raw=true" height="250"/> |
-
+| <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/page-exercicio.png?raw=true" height="250" width="130"/> | <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/IMC.png?raw=true" height="250" width="130"/> | <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/Perfil.png?raw=true" height="250" width="130"/> |
 
 ## 🎯 Objetivos do Projeto
 
