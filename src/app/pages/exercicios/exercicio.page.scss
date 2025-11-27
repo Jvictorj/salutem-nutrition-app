@@ -1,0 +1,199 @@
+$sage-green: #A7B59B;
+$sage-light: #C5D1BC; // Cor de fundo dos cards (aproximada da imagem)
+$text-dark: #333;
+$bg-page: #f9f9f9;
+
+ion-toolbar {
+  --background: #{$sage-green};
+  --color: white;
+  
+  ion-icon {
+    font-size: 1.4rem;
+  }
+}
+
+// Painel de Estatísticas
+.stats-panel {
+  background-color: $sage-green;
+  padding: 15px 20px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  border-radius: 0 0 20px 20px; // Arredonda a parte de baixo
+  margin-bottom: 10px;
+
+  .stat-item {
+    text-align: center;
+    flex: 1;
+
+    .label {
+      font-size: 0.8rem;
+      opacity: 0.9;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+
+      ion-icon { font-size: 1rem; }
+    }
+  }
+
+  .divider {
+    width: 1px;
+    height: 30px;
+    background-color: rgba(255,255,255,0.3);
+  }
+}
+
+.exercicio-page {
+  --background: #{$bg-page};
+}
+
+// Filtros
+.filters-container {
+  padding: 10px 0;
+  
+  ion-segment {
+    background: transparent;
+    padding-left: 16px; // Espaço inicial para scroll
+
+    ion-segment-button {
+      --color: #666;
+      --color-checked: #{$sage-green};
+      --background: white;
+      --background-checked: white;
+      --border-radius: 20px;
+      border: 1px solid #eee;
+      min-width: auto;
+      padding: 0 16px;
+      margin-right: 8px;
+      height: 36px;
+      min-height: 36px;
+      font-weight: 600;
+      font-size: 0.85rem;
+
+      &.segment-button-checked {
+        border-color: $sage-green;
+        border-width: 1.5px;
+      }
+    }
+  }
+}
+
+.section-title {
+  padding: 10px 16px 5px;
+  h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #2c2c2c;
+    margin: 0;
+  }
+}
+
+// Lista de Cards
+.workouts-list {
+  background: transparent;
+  padding: 0 16px 20px;
+
+  .workout-card {
+    background-color: $sage-light; // Cor esverdeada do card na imagem
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    color: #fff; // Texto parece ser branco ou muito claro na imagem para contraste com verde
+
+    // Ajuste se o fundo for verde escuro, mas na imagem parece um verde médio
+    // Se precisar de texto escuro, mude aqui. Vou assumir texto branco para contraste com Sage.
+    h3 { color: white; margin: 0 0 5px; font-weight: 700; font-size: 1.2rem; }
+    .description { color: rgba(255,255,255,0.9); font-size: 0.9rem; line-height: 1.4; margin-bottom: 15px; }
+    .badge { 
+      background: rgba(255,255,255,0.2); 
+      padding: 4px 10px; 
+      border-radius: 12px; 
+      font-size: 0.7rem; 
+      text-transform: uppercase; 
+      letter-spacing: 0.5px;
+    }
+
+    .card-header-row {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 15px;
+
+      .workout-icon-box {
+        background: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+        img { width: 30px; height: 30px; }
+        ion-icon { font-size: 24px; color: $sage-green; }
+      }
+    }
+
+    .meta-info {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+      
+      .meta-item {
+        display: flex;
+        align-items: center;
+        font-size: 0.9rem;
+        color: white;
+        
+        ion-icon { margin-right: 6px; }
+      }
+    }
+
+    .btn-see-more {
+      --background: rgba(255,255,255,0.25); // Botão translúcido
+      --box-shadow: none;
+      --border-radius: 12px;
+      --color: white;
+      font-weight: 700;
+      height: 45px;
+      margin: 0;
+    }
+  }
+}
+
+// Youtube Mini Cards (Horizontal Scroll)
+.horizontal-scroll {
+  display: flex;
+  overflow-x: auto;
+  padding: 0 16px 20px;
+  gap: 15px;
+
+  .video-card-mini {
+    min-width: 140px;
+    width: 140px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
+    img { width: 100%; height: 90px; object-fit: cover; }
+    p { 
+      font-size: 0.8rem; 
+      padding: 8px; 
+      margin: 0; 
+      color: #444; 
+      line-height: 1.2; 
+    }
+  }
+}

@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/user/auth.service'; // Caminho corrigido
+import { ToastController } from '@ionic/angular';
+import { finalize } from 'rxjs/operators';
 
 interface UserProfile {
-  profilePicture: string;
-  // Adicione outras propriedades aqui conforme necessário
+  photoUrl?: string; // Padronizado para photoUrl (consistente com profile.page.ts)
 }
 
 @Component({
@@ -14,65 +15,104 @@ interface UserProfile {
   styleUrls: ['./edit-profile.page.scss'],
 })
 export class EditProfilePage implements OnInit {
-  profilePicture: string = ''; // URL da imagem de perfil
-  avatarUrl: string = 'assets/avatar/default-avatar.PNG'; // URL da imagem padrão
+  
+  @ViewChild('fileInput', { static: false }) fileInput!: ElementRef;
+  
+  profilePicture: string = 'assets/icon/favicon.png'; // Fallback
+  isUploading: boolean = false;
 
   constructor(
     private storage: AngularFireStorage,
     private firestore: AngularFirestore,
-    private authService: AuthService
+    private authService: AuthService,
+    private toastController: ToastController
   ) {}
 
   ngOnInit() {
     this.loadUserProfile();
   }
 
-  // Método para carregar os dados do usuário
   async loadUserProfile() {
     const user = await this.authService.getCurrentUser();
     if (user) {
-      const userDoc = await this.firestore.collection('users').doc(user.uid).get().toPromise();
-      if (userDoc && userDoc.exists) {
-        const data = userDoc.data() as UserProfile;
-        this.profilePicture = data.profilePicture || this.avatarUrl; // Carrega a imagem de perfil ou usa a imagem padrão
+      try {
+        const userDoc = await this.firestore.collection('users').doc(user.uid).get().toPromise();
+        if (userDoc && userDoc.exists) {
+          const data = userDoc.data() as UserProfile;
+          // Verifica se existe a foto, senão usa o padrão
+          if (data.photoUrl) {
+            this.profilePicture = data.photoUrl;
+          }
+        }
+      } catch (error) {
+        console.error("Erro ao carregar perfil:", error);
       }
     }
   }
 
-  // Método para selecionar uma nova imagem
+  // Aciona o input oculto
   selectImage() {
-    const fileInput = document.querySelector('#fileInput') as HTMLInputElement | null;
-    if (fileInput) {
-      fileInput.click();
-    }
+    this.fileInput.nativeElement.click();
   }
 
-  // Método para lidar com o arquivo selecionado
   async onFileSelected(event: any) {
     const file = event.target.files[0];
-    if (file) {
-      const user = await this.authService.getCurrentUser();
-      if (user) {
-        const filePath = `avatars/${user.uid}/${file.name}`;
-        const fileRef = this.storage.ref(filePath);
-        const task = this.storage.upload(filePath, file);
+    if (!file) return;
 
-        task.snapshotChanges().subscribe({
-          next: (snapshot) => {
-            // Você pode adicionar uma barra de progresso aqui, se quiser
-          },
-          complete: () => {
-            fileRef.getDownloadURL().subscribe((url) => {
-              this.profilePicture = url; // Atualizando a variável profilePicture
-              console.log('Imagem do avatar atualizada com sucesso');
-              this.firestore.collection('users').doc(user.uid).update({ profilePicture: url });
-            });
-          },
-          error: (err) => {
-            console.error('Erro ao fazer upload da foto:', err);
-          }
-        });
-      }
+    // Validação simples de tamanho (ex: max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      this.showToast('A imagem é muito grande. Escolha uma menor que 5MB.', 'warning');
+      return;
     }
+
+    this.isUploading = true;
+    const user = await this.authService.getCurrentUser();
+
+    if (user) {
+      // Cria um nome único para evitar cache
+      const filePath = `avatars/${user.uid}/profile_${Date.now()}.jpg`;
+      const fileRef = this.storage.ref(filePath);
+      const task = this.storage.upload(filePath, file);
+
+      // Observa o progresso e finalização
+      task.snapshotChanges().pipe(
+        finalize(() => {
+          fileRef.getDownloadURL().subscribe(async (url) => {
+            this.profilePicture = url;
+            
+            // Atualiza no Firestore
+            try {
+              await this.firestore.collection('users').doc(user.uid).update({ 
+                photoUrl: url // Garanta que o nome do campo é o mesmo usado no ProfilePage
+              });
+              this.showToast('Foto de perfil atualizada!', 'success');
+            } catch (err) {
+              console.error('Erro ao salvar URL:', err);
+              this.showToast('Erro ao salvar a foto.', 'danger');
+            } finally {
+              this.isUploading = false;
+            }
+          });
+        })
+      ).subscribe({
+        error: (err) => {
+          console.error('Erro no upload:', err);
+          this.isUploading = false;
+          this.showToast('Falha no envio da imagem.', 'danger');
+        }
+      });
+    } else {
+      this.isUploading = false;
+    }
+  }
+
+  async showToast(msg: string, color: string) {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 2000,
+      color: color,
+      position: 'bottom'
+    });
+    toast.present();
   }
 }

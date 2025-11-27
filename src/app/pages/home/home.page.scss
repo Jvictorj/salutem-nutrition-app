@@ -1,0 +1,221 @@
+// Variáveis do Tema
+$sage-green: #A7B59B;
+$text-dark: #333;
+$bg-light: #f4f6f5; // Fundo levemente cinza/verde
+
+ion-toolbar {
+  --background: #fff;
+  padding-top: 10px;
+  
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
+  }
+
+  .welcome-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $text-dark;
+    padding-left: 0;
+    text-align: left;
+  }
+
+  .user-avatar {
+    width: 45px;
+    height: 45px;
+    border: 2px solid $sage-green;
+    cursor: pointer;
+    
+    img {
+      object-fit: cover;
+    }
+  }
+}
+
+.home-page {
+  --background: #{$bg-light};
+}
+
+// Estilo Geral dos Cards
+ion-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin: 16px;
+  
+  ion-card-header {
+    padding-bottom: 0;
+  }
+
+  ion-card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: $text-dark;
+  }
+}
+
+// Card 1: Status (Plano para hoje)
+.status-card {
+  .status-item {
+    text-align: center;
+    padding: 10px 5px;
+
+    ion-icon {
+      font-size: 1.8rem;
+      margin-bottom: 5px;
+      // Cores específicas para os ícones
+      &[name="flame-outline"] { color: #eca680; }
+      &[name="footsteps-outline"] { color: $sage-green; }
+      &[name="barbell-outline"] { color: #9bbec7; }
+    }
+
+    p {
+      font-size: 0.75rem;
+      color: #888;
+      margin: 0 0 5px;
+      line-height: 1.2;
+    }
+
+    h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: $text-dark;
+      margin: 0;
+    }
+  }
+}
+
+// Seletor de Dias
+.day-selector-container {
+  margin: 10px 0;
+  background: transparent;
+
+  .day-segment {
+    background: transparent;
+    
+    ion-segment-button {
+      min-width: auto;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
+      color: #999;
+      --indicator-color: transparent; // Remove a linha padrão
+      
+      ion-label {
+        margin: 5px 10px;
+      }
+
+      // Estilo do dia selecionado
+      &.segment-button-checked {
+        color: $text-dark;
+        font-weight: 800;
+        position: relative;
+        
+        &::after {
+          content: '';
+          display: block;
+          width: 20px;
+          height: 3px;
+          background: $sage-green;
+          border-radius: 2px;
+          margin: 2px auto 0;
+        }
+      }
+    }
+  }
+}
+
+// Card 2: Resumo de Calorias
+.summary-card {
+  .summary-item {
+    text-align: center;
+    
+    p {
+      font-size: 0.75rem;
+      color: #888;
+      margin-bottom: 4px;
+    }
+
+    h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    h2 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin: 0;
+    }
+
+    &.main {
+      border-left: 1px solid #eee;
+      border-right: 1px solid #eee;
+    }
+  }
+
+  .highlight-green { color: $sage-green; opacity: 0.8; }
+  .highlight-sage { color: $sage-green; }
+}
+
+// Card 3: Dieta
+.diet-card {
+  .diet-item {
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    font-size: 0.9rem;
+    color: #555;
+    
+    strong {
+      color: $text-dark;
+      margin-right: 5px;
+    }
+  }
+
+  .btn-more {
+    margin-top: 10px;
+    --color: #{$sage-green};
+    --border-color: #{$sage-green};
+    --border-radius: 8px;
+    font-size: 0.8rem;
+    height: 40px;
+  }
+}
+
+// Ações Rápidas
+.quick-actions {
+  padding: 0 16px;
+  
+  h3 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: #666;
+    margin-left: 5px;
+  }
+
+  .action-card {
+    margin: 5px;
+    text-align: center;
+    padding: 15px 0;
+    background: #fff;
+    
+    ion-icon {
+      font-size: 2rem;
+      color: $sage-green;
+      margin-bottom: 8px;
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #555;
+    }
+  }
+}
+
+.bottom-spacer {
+  height: 80px; // Espaço para o Footer não cobrir conteúdo
+}

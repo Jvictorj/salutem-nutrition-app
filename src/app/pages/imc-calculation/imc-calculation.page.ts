@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from '../../services/user/auth.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 
 interface UserData {
   weight: number;
   height: number;
-  dateOfBirth: string;
+  dateOfBirth: string; // Formato ISO ou string de data
   gender: string;
 }
 
@@ -16,13 +16,14 @@ interface UserData {
   styleUrls: ['./imc-calculation.page.scss'],
 })
 export class ImcCalculationPage implements OnInit {
-  peso!: number;
-  altura!: number;
-  idade!: number;
-  sexo!: string;
-  pesoIdeal!: number;
-  resultadoIMC!: { imc: number, classificacao: string };
-  resultadoMensagem!: string;
+  peso: number | null = null;
+  altura: number | null = null;
+  idade: number | null = null;
+  sexo: string = '';
+  
+  pesoIdeal: number | null = null;
+  resultadoIMC: { imc: number, classificacao: string } | null = null;
+  resultadoMensagem: string = '';
 
   constructor(
     private authService: AuthService,
@@ -34,155 +35,129 @@ export class ImcCalculationPage implements OnInit {
     this.checkAuthentication();
   }
 
-  // Verificar se o usuário está autenticado
   async checkAuthentication() {
     const user = await this.authService.getCurrentUser();
     if (user) {
-      // Usuário autenticado, carrega os dados
-      this.loadUserData();
+      this.loadUserData(user.uid);
     } else {
-      // Usuário não autenticado, redireciona para a página de login
-      this.router.navigate(['/login']);
+      // Se não estiver logado, pode redirecionar ou apenas deixar usar a calc vazia
+      // this.router.navigate(['/login']); 
     }
   }
 
-  // Método para carregar os dados do usuário
-  async loadUserData() {
-    const user = await this.authService.getCurrentUser();
-    if (user) {
-      const userId = user.uid;
-      const userDoc = await this.firestore.collection('users').doc(userId).get().toPromise();
+  async loadUserData(userId: string) {
+    try {
+      const doc = await this.firestore.collection('users').doc(userId).get().toPromise();
       
-      // Verificar se o documento existe antes de acessar os dados
-      if (userDoc && userDoc.exists) {
-        const userData = userDoc.data() as UserData; // Aqui estamos fazendo o cast para UserData
+      if (doc && doc.exists) {
+        const userData = doc.data() as UserData;
         
-        // Verificar se userData contém os dados necessários
-        if (userData && userData.weight && userData.height && userData.dateOfBirth && userData.gender) {
-          this.peso = userData.weight;
-          this.altura = userData.height;
-          this.idade = this.calculateAge(userData.dateOfBirth); // Calcula a idade
-          this.sexo = userData.gender;
-          this.calcularPesoIdeal(); // Calcula o peso ideal
-        } else {
-          console.error('Dados do usuário incompletos ou inválidos');
+        if (userData) {
+          if (userData.weight) this.peso = userData.weight;
+          if (userData.height) this.altura = userData.height;
+          if (userData.gender) this.sexo = userData.gender;
+          if (userData.dateOfBirth) {
+            this.idade = this.calculateAge(userData.dateOfBirth);
+          }
+          
+          // Se já tiver dados suficientes, calcula automaticamente o ideal (opcional)
+          if (this.altura && this.sexo) {
+            this.calcularPesoIdeal();
+          }
         }
-      } else {
-        console.error('Usuário não encontrado no Firestore');
       }
-    } else {
-      console.error('Usuário não autenticado');
+    } catch (error) {
+      console.error('Erro ao carregar dados do usuário:', error);
     }
   }
 
-  // Método para calcular a idade com base na data de nascimento
   calculateAge(dateOfBirth: string): number {
     const birthDate = new Date(dateOfBirth);
     const today = new Date();
     let age = today.getFullYear() - birthDate.getFullYear();
     const month = today.getMonth();
     if (month < birthDate.getMonth() || (month === birthDate.getMonth() && today.getDate() < birthDate.getDate())) {
-      age--; // Ajusta a idade se o aniversário ainda não aconteceu neste ano
+      age--;
     }
     return age;
   }
 
-  // Método para calcular o peso ideal
   calcularPesoIdeal() {
     if (this.altura && this.sexo) {
-        console.log(`Calculando peso ideal para altura: ${this.altura}, sexo: ${this.sexo}`);
-        const alturaEmCm = this.altura; // A altura já está em cm
+      // Fórmula de Devine (aproximada)
+      // Homens: 50kg + 2.3kg por polegada acima de 5 pés
+      // Mulheres: 45.5kg + 2.3kg por polegada acima de 5 pés
+      // Altura base 5 pés = 152.4 cm
+      
+      const alturaBase = 152.4;
+      const fatorPorPolegada = 2.3;
+      const polegadaEmCm = 2.54;
+
+      if (this.altura > alturaBase) {
+        const diferencaAltura = this.altura - alturaBase;
+        const polegadasAcima = diferencaAltura / polegadaEmCm;
+        
         if (this.sexo === 'male') {
-            this.pesoIdeal = 50 + 2.3 * (alturaEmCm - 152.4) / 2.54; // Fórmula para homens
-        } else if (this.sexo === 'female') {
-            this.pesoIdeal = 45.5 + 2.3 * (alturaEmCm - 152.4) / 2.54; // Fórmula para mulheres
+          this.pesoIdeal = 50 + (polegadasAcima * fatorPorPolegada);
         } else {
-            console.error(`Sexo desconhecido: ${this.sexo}`);
+          this.pesoIdeal = 45.5 + (polegadasAcima * fatorPorPolegada);
         }
-        console.log(`Peso ideal calculado: ${this.pesoIdeal}`);
+      } else {
+        // Fallback simples para alturas menores
+        this.pesoIdeal = this.sexo === 'male' ? 50 : 45.5; 
+      }
     }
   }
 
-  // Método para calcular o IMC
   calcularIMC() {
     if (!this.peso || !this.altura) {
-      console.error('Peso e altura são obrigatórios para calcular o IMC.');
+      // Aqui você pode mostrar um Toast de aviso se quiser
       return;
     }
-  
-    const alturaEmMetros = this.altura / 100; // Converter altura para metros
-    const imc = this.peso / (alturaEmMetros * alturaEmMetros);
-    const { classificacao, mensagem } = this.obterClassificacao(imc);
-  
+
+    // Calcula Peso Ideal se ainda não calculou
+    this.calcularPesoIdeal();
+
+    const alturaMetros = this.altura / 100;
+    const imc = this.peso / (alturaMetros * alturaMetros);
+    const classificacao = this.obterClassificacaoTexto(imc);
+    this.resultadoMensagem = this.obterMensagemFeedback(classificacao);
+
     this.resultadoIMC = { imc, classificacao };
-    this.resultadoMensagem = mensagem; // Nova propriedade para a mensagem
   }
-  
-  // Método para classificar o IMC
-  private obterClassificacao(imc: number): { classificacao: string, mensagem: string } {
-    if (imc < 18.5) {
-      return {
-        classificacao: 'Abaixo do peso',
-        mensagem: 'Seu IMC está abaixo do peso ideal. Isso pode indicar desnutrição ou outros problemas de saúde. Considere consultar um nutricionista ou médico para avaliação.',
-      };
-    } else if (imc >= 18.5 && imc < 24.9) {
-      return {
-        classificacao: 'Peso normal',
-        mensagem: 'Parabéns! Seu IMC está dentro do intervalo considerado saudável pela OMS. Mantenha hábitos saudáveis para continuar assim.',
-      };
-    } else if (imc >= 25 && imc < 29.9) {
-      return {
-        classificacao: 'Sobrepeso',
-        mensagem: 'Seu IMC indica sobrepeso. Isso pode ser um sinal para adotar hábitos mais saudáveis, como melhorar sua alimentação e praticar exercícios físicos.',
-      };
-    } else if (imc >= 30 && imc < 34.9) {
-      return {
-        classificacao: 'Obesidade grau 1',
-        mensagem: 'Seu IMC está na faixa de obesidade grau 1. É importante agir para evitar complicações de saúde. Procure orientação médica ou nutricional.',
-      };
-    } else if (imc >= 35 && imc < 39.9) {
-      return {
-        classificacao: 'Obesidade grau 2',
-        mensagem: 'Seu IMC indica obesidade grau 2, que pode trazer riscos significativos à saúde. Recomenda-se buscar acompanhamento profissional.',
-      };
-    } else {
-      return {
-        classificacao: 'Obesidade grau 3',
-        mensagem: 'Seu IMC está na faixa de obesidade grau 3 (obesidade mórbida). Esta é uma condição séria que exige atenção médica imediata.',
-      };
+
+  obterClassificacaoTexto(imc: number): string {
+    if (imc < 18.5) return 'Abaixo do peso';
+    if (imc < 24.9) return 'Peso normal';
+    if (imc < 29.9) return 'Sobrepeso';
+    if (imc < 34.9) return 'Obesidade grau 1';
+    if (imc < 39.9) return 'Obesidade grau 2';
+    return 'Obesidade grau 3';
+  }
+
+  obterMensagemFeedback(classificacao: string): string {
+    switch (classificacao) {
+      case 'Peso normal':
+        return 'Parabéns! Você está saudável. Continue assim!';
+      case 'Abaixo do peso':
+        return 'Seu peso está abaixo do recomendado. Procure orientação nutricional.';
+      case 'Sobrepeso':
+        return 'Atenção! Pequenas mudanças na dieta podem ajudar.';
+      default:
+        return 'Cuidado. É recomendado buscar acompanhamento médico.';
     }
   }
 
-  // Método para obter a classe de cor da classificação do IMC
+  // Retorna a classe CSS para cores dinâmicas
   obterClassificacaoCor(classificacao: string): string {
     switch (classificacao) {
-      case 'Abaixo do peso':
-        return 'classificacao-baixo';
-      case 'Peso normal':
-        return 'classificacao-normal';
-      case 'Sobrepeso':
-        return 'classificacao-sobrepeso';
-      case 'Obesidade grau 1':
-        return 'classificacao-obesidade1';
-      case 'Obesidade grau 2':
-        return 'classificacao-obesidade2';
-      case 'Obesidade grau 3':
-        return 'classificacao-obesidade3';
-      default:
-        return '';
+      case 'Abaixo do peso': return 'classificacao-baixo';
+      case 'Peso normal': return 'classificacao-normal';
+      case 'Sobrepeso': return 'classificacao-sobrepeso';
+      case 'Obesidade grau 1': return 'classificacao-obesidade1';
+      case 'Obesidade grau 2': return 'classificacao-obesidade2';
+      case 'Obesidade grau 3': return 'classificacao-obesidade3';
+      default: return '';
     }
   }
-
-  // Tornar este método público para acesso no template
-  public obterClasseFeedback(classificacao: string): string {
-    if (classificacao === 'Peso normal') {
-      return 'feedback-normal';
-    } else if (classificacao === 'Abaixo do peso') {
-      return 'feedback-baixo';
-    } else if (classificacao.includes('Obesidade')) {
-      return 'feedback-obesidade';
-    } else {
-      return 'feedback-sobrepeso';
-    }
-  }  
 }

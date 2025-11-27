@@ -10,39 +10,39 @@ const routes: Routes = [
   },
   {
     path: 'welcome',
-    loadChildren: () => import('./pages/welcome-page/welcome/welcome.module').then( m => m.WelcomePageModule)
+    loadChildren: () => import('./pages/welcome/welcome/welcome.module').then( m => m.WelcomePageModule)
   },
   {
     path: 'splash-1',
-    loadChildren: () => import('./pages/splash-page/splash-1/splash-1.module').then(m => m.Splash1PageModule)
+    loadChildren: () => import('./pages/splash/splash-1/splash-1.module').then(m => m.Splash1PageModule)
   },
   {
     path: 'splash-2',
-    loadChildren: () => import('./pages/splash-page/splash-2/splash-2.module').then( m => m.Splash2PageModule)
+    loadChildren: () => import('./pages/splash/splash-2/splash-2.module').then( m => m.Splash2PageModule)
   },
   {
     path: 'splash-3',
-    loadChildren: () => import('./pages/splash-page/splash-3/splash-3.module').then( m => m.Splash3PageModule)
+    loadChildren: () => import('./pages/splash/splash-3/splash-3.module').then( m => m.Splash3PageModule)
   },
   {
     path: 'splash-4',
-    loadChildren: () => import('./pages/splash-page/splash-4/splash-4.module').then( m => m.Splash4PageModule)
+    loadChildren: () => import('./pages/splash/splash-4/splash-4.module').then( m => m.Splash4PageModule)
   },
   {
     path: 'login',
-    loadChildren: () => import('./pages/login-page/login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./pages/login/login/login.module').then( m => m.LoginPageModule)
   },
   {
     path: 'register',
-    loadChildren: () => import('./pages/register-page/register/register.module').then( m => m.RegisterPageModule)
+    loadChildren: () => import('./pages/register/register/register.module').then( m => m.RegisterPageModule)
   },
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
   },
   {
     path: 'exercicio',
-    loadChildren: () => import('./pages/exercicio/exercicio.module').then( m => m.ExercicioPageModule)
+    loadChildren: () => import('./pages/exercicios/exercicio.module').then( m => m.ExercicioPageModule)
   },
   {
     path: 'nutriente-track',
@@ -74,7 +74,7 @@ const routes: Routes = [
   },
   {
     path: 'refeicao',
-    loadChildren: () => import('./refeicao/refeicao.module').then( m => m.RefeicaoPageModule)
+    loadChildren: () => import('./pages/refeicao/refeicao.module').then( m => m.RefeicaoPageModule)
   },
 ];
 

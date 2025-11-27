@@ -1,16 +1,83 @@
-/* app.component.scss ou em um arquivo SCSS específico da página */
+// Variáveis
+$sage-green: #A7B59B;
+$text-color: #666;
 
 ion-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  z-index: 10; /* Garantir que o footer fique acima do conteúdo */
-  background-color: #ffffff; /* Exemplo de cor de fundo, ajuste conforme necessário */
+  background: transparent;
+  padding-bottom: env(safe-area-inset-bottom); // Respeita a área do iPhone X+
+  pointer-events: none; // Permite clicar através da área transparente
 }
 
-/* Para o conteúdo acima do footer não ficar oculto atrás dele */
-ion-content {
-  padding-bottom: 56px; /* Ajuste o valor conforme a altura do footer */
+.tab-bar {
+  --background: #ffffff;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  pointer-events: auto; // Reativa cliques na barra
+  position: relative;
+}
+
+// Botões Normais
+.tab-btn {
+  --color: #{$text-color};
+  height: 100%;
+  min-width: 60px;
+
+  .btn-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    
+    ion-icon {
+      font-size: 1.4rem;
+    }
+    label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      text-transform: none; // Remove caixa alta padrão
+    }
+  }
+
+  // Estilo quando o botão está ativo ou focado
+  &:focus, &:active {
+    --color: #{$sage-green};
+    
+    ion-icon {
+      color: #{$sage-green};
+    }
+  }
+}
+
+// Botão Central (FAB)
+.fab-wrapper {
+  position: absolute;
+  top: -25px; // Sobe o botão para fora da barra
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  background-color: #f8f9fc; // Mesma cor de fundo do app (ajuste se necessário)
+  border-radius: 50%;
+  padding: 6px; // Cria a borda falsa ao redor do botão
+}
+
+.fab-button {
+  --background: #{$sage-green};
+  --color: white;
+  --border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  --padding-start: 0;
+  --padding-end: 0;
+  box-shadow: 0 4px 10px rgba(167, 181, 155, 0.5);
+  margin: 0;
+
+  ion-icon {
+    font-size: 2rem;
+  }
 }

@@ -1,71 +1,108 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
+      <ion-back-button defaultHref="/home" icon="arrow-back"></ion-back-button>
     </ion-buttons>
     <ion-title>Cálculo de IMC</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="imc-page">
   <div class="content-container">
-    <h1 class="ion-text-center">Calculadora de IMC</h1>
-    <p class="ion-text-center ion-text-muted">
-      Confira os seus dados e calcule o seu índice de massa corporal.
-    </p>
-
-    <!-- Dados do Utilizador -->
-    <ion-list inset="true">
-      <ion-item>
-        <ion-label>Peso (kg)</ion-label>
-        <ion-note slot="end" color="dark"><strong>{{ peso }}</strong></ion-note>
-      </ion-item>
-      <ion-item>
-        <ion-label>Altura (cm)</ion-label>
-        <ion-note slot="end" color="dark"><strong>{{ altura }}</strong></ion-note>
-      </ion-item>
-      <ion-item>
-        <ion-label>Idade</ion-label>
-        <ion-note slot="end" color="dark"><strong>{{ idade }} anos</strong></ion-note>
-      </ion-item>
-      <ion-item>
-        <ion-label>Sexo</ion-label>
-        <ion-note slot="end" color="dark"><strong>{{ sexo === 'male' ? 'Masculino' : 'Feminino' }}</strong></ion-note>
-      </ion-item>
-    </ion-list>
-
-    <!-- Botão Calcular -->
-    <div class="ion-padding">
-      <ion-button expand="block" size="large" (click)="calcularIMC()">
-        Calcular IMC
-      </ion-button>
-    </div>
-
-    <!-- Resultado -->
-    <ion-card *ngIf="resultadoIMC" class="ion-margin-top result-card">
+    
+    <!-- Card Introdutório -->
+    <ion-card class="intro-card">
+      <div class="icon-circle">
+        <ion-icon name="calculator"></ion-icon>
+      </div>
       <ion-card-header>
-        <ion-card-subtitle class="ion-text-center">O SEU RESULTADO</ion-card-subtitle>
-        <ion-card-title class="ion-text-center" style="font-size: 2.5rem; color: var(--ion-color-primary);">
-          {{ resultadoIMC.imc | number:'1.1-1' }}
-        </ion-card-title>
+        <ion-card-title>Calculadora de IMC</ion-card-title>
       </ion-card-header>
-
-      <ion-card-content class="ion-text-center">
-        <!-- Correção: Removido o '?' que causava warning -->
-        <ion-chip [class]="obterClassificacaoCor(resultadoIMC.classificacao || 'normal')">
-          <ion-label>{{ resultadoIMC.classificacao }}</ion-label>
-        </ion-chip>
-
-        <p class="ion-margin-top" [class]="obterClasseFeedback(resultadoIMC.classificacao || 'normal')">
-          {{ resultadoMensagem }}
-        </p>
-
-        <div class="ion-margin-top" style="border-top: 1px solid #ccc; padding-top: 10px;">
-          <p><small>Peso Ideal Estimado:</small></p>
-          <h3>{{ pesoIdeal | number:'1.0-2' }} kg</h3>
-        </div>
+      <ion-card-content>
+        Com as suas informações abaixo vamos calcular o seu IMC e verificar o Peso ideal.
       </ion-card-content>
     </ion-card>
+
+    <!-- Formulário de Dados -->
+    <div class="form-container">
+      
+      <!-- Peso -->
+      <div class="input-wrapper">
+        <label>
+          <ion-icon name="scale-outline"></ion-icon> Peso (kg)
+        </label>
+        <ion-item lines="none" class="custom-input">
+          <ion-input type="number" [(ngModel)]="peso" placeholder="Ex: 70"></ion-input>
+        </ion-item>
+      </div>
+
+      <!-- Altura -->
+      <div class="input-wrapper">
+        <label>
+          <ion-icon name="resize-outline"></ion-icon> Altura (cm)
+        </label>
+        <ion-item lines="none" class="custom-input">
+          <ion-input type="number" [(ngModel)]="altura" placeholder="Ex: 175"></ion-input>
+        </ion-item>
+      </div>
+
+      <!-- Idade -->
+      <div class="input-wrapper">
+        <label>
+          <ion-icon name="calendar-outline"></ion-icon> Idade
+        </label>
+        <ion-item lines="none" class="custom-input">
+          <ion-input type="number" [(ngModel)]="idade" placeholder="Ex: 25"></ion-input>
+        </ion-item>
+      </div>
+
+      <!-- Sexo -->
+      <div class="input-wrapper">
+        <label>
+          <ion-icon name="person-outline"></ion-icon> Sexo
+        </label>
+        <ion-item lines="none" class="custom-input">
+          <ion-select [(ngModel)]="sexo" placeholder="Selecione" interface="popover">
+            <ion-select-option value="male">Masculino</ion-select-option>
+            <ion-select-option value="female">Feminino</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+
+      <!-- Botão Calcular -->
+      <ion-button expand="block" class="btn-calculate" (click)="calcularIMC()">
+        Calcular Agora
+      </ion-button>
+
+    </div>
+
+    <!-- Resultado (Card Dinâmico) -->
+    <div *ngIf="resultadoIMC" class="result-section fade-in">
+      
+      <div class="result-header">
+        <h3>Seu Resultado</h3>
+      </div>
+
+      <ion-card class="result-card">
+        <div class="imc-circle" [ngClass]="obterClassificacaoCor(resultadoIMC.classificacao)">
+          <span class="value">{{ resultadoIMC.imc | number:'1.1-1' }}</span>
+          <span class="label">IMC</span>
+        </div>
+
+        <h2 class="classification" [ngClass]="'text-' + obterClassificacaoCor(resultadoIMC.classificacao)">
+          {{ resultadoIMC.classificacao }}
+        </h2>
+
+        <div class="feedback-box" [ngClass]="'bg-' + obterClassificacaoCor(resultadoIMC.classificacao)">
+          <p>{{ resultadoMensagem }}</p>
+        </div>
+
+        <div class="ideal-weight">
+          <p>Peso Ideal Estimado</p>
+          <h4>{{ pesoIdeal | number:'1.0-1' }} kg</h4>
+        </div>
+      </ion-card>
+    </div>
 
   </div>
 </ion-content>

@@ -1,23 +1,47 @@
-<ion-header>
-  <ion-toolbar>
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button defaultHref="/profile" icon="arrow-back"></ion-back-button>
     </ion-buttons>
-    <ion-title>Editar Perfil</ion-title>
+    <ion-title>Foto de Perfil</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-item>
-    <ion-avatar slot="start">
-      <!-- Exibe a foto de perfil ou a padrão -->
-      <img [src]="profilePicture || 'assets/default-avatar.png'" alt="Profile Picture" />
-    </ion-avatar>
-
-    <!-- Botão para selecionar nova foto -->
-    <ion-button expand="block" (click)="selectImage()">Alterar Foto</ion-button>
+<ion-content class="edit-profile-page">
+  <div class="content-container">
     
-    <!-- Input oculto para selecionar imagem -->
-    <input type="file" (change)="onFileSelected($event)" #fileInput hidden />
-  </ion-item>
+    <div class="header-text">
+      <h2>Atualize sua foto</h2>
+      <p>Escolha uma imagem que mostre quem você é.</p>
+    </div>
+
+    <!-- Área do Avatar -->
+    <div class="avatar-section">
+      <div class="avatar-wrapper" [class.uploading]="isUploading">
+        <!-- Imagem atual -->
+        <img [src]="profilePicture" alt="Avatar" class="avatar-img">
+        
+        <!-- Overlay de Carregamento -->
+        <div class="loading-overlay" *ngIf="isUploading">
+          <ion-spinner name="crescent" color="light"></ion-spinner>
+        </div>
+      </div>
+
+      <!-- Botões de Ação -->
+      <div class="actions">
+        <ion-button expand="block" class="btn-primary" (click)="selectImage()" [disabled]="isUploading">
+          <ion-icon name="image-outline" slot="start"></ion-icon>
+          Escolher da Galeria
+        </ion-button>
+        
+        <!-- Input oculto -->
+        <input type="file" (change)="onFileSelected($event)" #fileInput hidden accept="image/*" />
+      </div>
+    </div>
+
+    <div class="tips">
+      <p><ion-icon name="information-circle-outline"></ion-icon> Dica: Use uma foto quadrada para melhor resultado.</p>
+    </div>
+
+  </div>
 </ion-content>

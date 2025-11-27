@@ -1,78 +1,135 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title color="secondary">Perfil</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="profile-page">
+  
+  <!-- Cabeçalho Verde Personalizado -->
+  <div class="custom-header">
+    <div class="header-content">
+      <div class="user-info">
+        <!-- Avatar com upload -->
+        <div class="avatar-wrapper" (click)="fileInput.click()">
+          <img [src]="profilePicture" alt="Avatar">
+          <div class="edit-badge">
+            <ion-icon name="camera"></ion-icon>
+          </div>
+        </div>
+        <!-- Input escondido para foto -->
+        <input type="file" (change)="uploadProfileImage($event)" accept="image/*" #fileInput style="display: none;">
 
-<ion-content>
-  <!-- User Info -->
-  <div class="profile-header">
-    <ion-avatar slot="start">
-      <!-- Exibe a foto de perfil ou a padrão -->
-      <img [src]="profilePicture || 'assets/default-avatar.png'" alt="Profile Picture" />
-    </ion-avatar>
-    <ion-buttons slot="end">
-      <!-- Botão para alterar a foto de perfil -->
-      <input type="file" (change)="uploadProfileImage($event)" accept="image/*" style="display: none" #fileInput />
-      <ion-button (click)="fileInput.click()" fill="clear" size="small">
-        <ion-icon name="camera-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <div class="name">
-      <h2>{{ user.fullName || 'Nome do usuário' }}</h2>
-    </div>
-
-    <!-- Stats -->
-    <div class="stats-container">
-      <div class="stat-item">
-        <h3>{{ user?.height }}cm</h3>
-        <p>Altura</p>
-      </div>
-      <div class="stat-item">
-        <h3>{{ user?.weight }}kg</h3>
-        <p>Peso</p>
-      </div>
-      <div class="stat-item">
-        <h3>{{ userAge }} Anos</h3> <!-- Exibe a idade calculada -->
-        <p>Idade</p>
+        <div class="text-info">
+          <h2>{{ user.fullName || 'Usuário' }}</h2>
+          <p>{{ user.email }}</p>
+          <span class="member-since">Membro desde Janeiro 2024</span>
+        </div>
+        
+        <ion-button fill="clear" class="edit-btn" (click)="goToEditPersonalData()">
+          <ion-icon name="create-outline" slot="icon-only"></ion-icon>
+        </ion-button>
       </div>
     </div>
   </div>
 
-  <!-- Account Section -->
-  <ion-list>
+  <div class="main-content">
+    
+    <!-- Informações de Saúde -->
+    <div class="section-title">
+      <h3>Informações de Saúde</h3>
+    </div>
 
-    <!-- Notifications -->
-    <ion-item lines="none">
-      <ion-icon slot="start" name="notifications-outline"></ion-icon>
-      <ion-label>Notificação</ion-label>
-      <ion-toggle slot="end" [(ngModel)]="notificationsEnabled"></ion-toggle>
-      <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>  <!-- Adicionando o ícone de seta no final -->
-    </ion-item>
+    <div class="stats-grid">
+      <div class="stat-item">
+        <h4>{{ user.height || '--' }}</h4>
+        <p>Altura (cm)</p>
+      </div>
+      <div class="stat-item">
+        <h4>{{ user.weight || '--' }}</h4>
+        <p>Peso (kg)</p>
+      </div>
+      <div class="stat-item">
+        <h4>{{ userAge || '--' }}</h4>
+        <p>Idade</p>
+      </div>
+    </div>
 
-    <!-- Dados pessoais -->
-    <ion-item button (click)="goToEditPersonalData()">
-      <ion-icon slot="start" name="person-outline"></ion-icon>
-      <ion-label>Dados pessoais</ion-label>
-      <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
-    </ion-item>
+    <!-- Card IMC Rápido -->
+    <ion-card class="imc-summary-card">
+      <div class="imc-content">
+        <div>
+          <p class="label">IMC Atual</p>
+          <div class="value-row">
+            <span class="imc-value">{{ userIMC ? (userIMC | number:'1.1-1') : '--' }}</span>
+            <span class="imc-status" *ngIf="userIMCClass">{{ userIMCClass }}</span>
+          </div>
+        </div>
+        <ion-button fill="outline" size="small" class="recalc-btn" (click)="goToIMCCalculation()">
+          Recalcular
+        </ion-button>
+      </div>
+    </ion-card>
 
-    <!-- IMC -->
-      <ion-item button (click)="goToIMCCalculation()">
-        <ion-icon slot="start" name="fitness-outline"></ion-icon>
-        <ion-label>Cálculo de IMC</ion-label>
-        <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+    <!-- Menu de Opções -->
+    <ion-list class="menu-list" lines="none">
+      
+      <!-- Notificações -->
+      <ion-item class="menu-item">
+        <div class="icon-box blue" slot="start">
+          <ion-icon name="notifications-outline"></ion-icon>
+        </div>
+        <ion-label>
+          <h3>Notificações</h3>
+          <p>Gerencie suas notificações</p>
+        </ion-label>
+        <ion-toggle slot="end" [(ngModel)]="notificationsEnabled" color="primary"></ion-toggle>
       </ion-item>
 
-    <!-- LogOut Section -->
-    <ion-item class="sla" button (click)="logOut()">
-      <ion-icon slot="start" name="log-out-outline"></ion-icon>
-      <ion-label>Sair</ion-label>
-      <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
-    </ion-item>
+      <!-- Dados Pessoais -->
+      <ion-item class="menu-item" button (click)="goToEditPersonalData()">
+        <div class="icon-box green" slot="start">
+          <ion-icon name="person-outline"></ion-icon>
+        </div>
+        <ion-label>
+          <h3>Dados Pessoais</h3>
+          <p>Edite suas informações</p>
+        </ion-label>
+        <ion-icon name="chevron-forward-outline" slot="end" color="medium"></ion-icon>
+      </ion-item>
 
-  </ion-list>
+      <!-- Cálculo de IMC -->
+      <ion-item class="menu-item" button (click)="goToIMCCalculation()">
+        <div class="icon-box grey" slot="start">
+          <ion-icon name="calculator-outline"></ion-icon>
+        </div>
+        <ion-label>
+          <h3>Cálculo de IMC</h3>
+          <p>Calcule seu índice de massa</p>
+        </ion-label>
+        <ion-icon name="chevron-forward-outline" slot="end" color="medium"></ion-icon>
+      </ion-item>
+
+      <!-- Privacidade -->
+      <ion-item class="menu-item" button>
+        <div class="icon-box purple" slot="start">
+          <ion-icon name="document-text-outline"></ion-icon>
+        </div>
+        <ion-label>
+          <h3>Privacidade e Termos</h3>
+          <p>Políticas e configurações</p>
+        </ion-label>
+        <ion-icon name="chevron-forward-outline" slot="end" color="medium"></ion-icon>
+      </ion-item>
+
+      <!-- Sair -->
+      <ion-item class="menu-item" button (click)="logOut()">
+        <div class="icon-box red" slot="start">
+          <ion-icon name="log-out-outline"></ion-icon>
+        </div>
+        <ion-label>
+          <h3>Sair</h3>
+          <p>Desconectar da conta</p>
+        </ion-label>
+        <ion-icon name="chevron-forward-outline" slot="end" color="medium"></ion-icon>
+      </ion-item>
+
+    </ion-list>
+
+    <div class="spacer-bottom"></div>
+  </div>
 </ion-content>

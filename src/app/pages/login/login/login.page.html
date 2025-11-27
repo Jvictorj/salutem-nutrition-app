@@ -1,0 +1,66 @@
+<ion-content class="login-page">
+  <div class="login-container">
+    <h2>Hey there,</h2>
+    <h1>Welcome Back</h1>
+
+    <!-- Email Input -->
+    <ion-item lines="none" class="input-item">
+      <ion-icon slot="start" name="mail-outline"></ion-icon>
+      <ion-input 
+        label="E-mail" 
+        label-placement="floating" 
+        type="email" 
+        [(ngModel)]="email">
+      </ion-input>
+    </ion-item>
+
+    <!-- Password Input -->
+    <ion-item lines="none" class="input-item">
+      <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+      <ion-input 
+        label="Sua Senha" 
+        label-placement="floating" 
+        [type]="passwordVisible ? 'text' : 'password'" 
+        [(ngModel)]="senha">
+      </ion-input>
+      <ion-icon 
+        slot="end" 
+        [name]="passwordVisible ? 'eye-outline' : 'eye-off-outline'" 
+        (click)="togglePasswordVisibility()">
+      </ion-icon>
+    </ion-item>
+
+    <!-- Forgot Password Link -->
+    <a class="forgot-password" (click)="forgotPassword()">Esqueceu Sua Senha?</a>
+
+    <!-- Login Button -->
+    <ion-button expand="block" class="login-button" (click)="login()">
+      <ion-icon slot="start" name="log-in-outline" style="margin-right: 8px;"></ion-icon>
+      Login
+    </ion-button>
+
+    <!-- Display Error Message -->
+    <div *ngIf="errorMessage" class="error-message">
+      <p>{{ errorMessage }}</p>
+    </div>
+
+    <div class="divider">
+      <span>Ou</span>
+    </div>
+
+    <!-- Social Login (Usando ícones nativos do Ionic para evitar erros de imagem) -->
+    <div class="social-login">
+      <ion-button fill="clear" (click)="loginWithGoogle()">
+        <ion-icon slot="icon-only" name="logo-google" color="dark"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" (click)="loginWithFacebook()">
+        <ion-icon slot="icon-only" name="logo-facebook" color="dark"></ion-icon>
+      </ion-button>
+    </div>    
+
+    <!-- Register Link (Usando routerLink para navegação SPA) -->
+    <div class="register-link">
+      Ainda Não Tem Uma Conta? <a routerLink="/register">Registre-se</a>
+    </div>
+  </div>
+</ion-content>

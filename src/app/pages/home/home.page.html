@@ -1,0 +1,138 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="light">
+    <div class="header-content">
+      <ion-title class="welcome-title">
+        Bem-vindo!
+        <!-- Se quiser mostrar o nome: Bem-vindo, {{ userName }} -->
+      </ion-title>
+      <ion-buttons slot="end" class="ion-margin-end">
+        <ion-avatar class="user-avatar" (click)="goToProfile()">
+          <img [src]="avatarUrl" alt="Avatar">
+        </ion-avatar>
+      </ion-buttons>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="home-page">
+  
+  <!-- Card Principal: Plano para Hoje -->
+  <ion-card class="status-card">
+    <ion-card-header>
+      <ion-card-title>Seu Plano Para Hoje</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <!-- Calorias -->
+          <ion-col size="4" class="status-item">
+            <ion-icon name="flame-outline" color="warning"></ion-icon>
+            <p>Calorias<br>Consumidas</p>
+            <h3>350 kcal</h3>
+          </ion-col>
+          <!-- Passos -->
+          <ion-col size="4" class="status-item">
+            <ion-icon name="footsteps-outline" color="success"></ion-icon>
+            <p>Passos</p>
+            <h3>5,000</h3>
+          </ion-col>
+          <!-- Exercícios -->
+          <ion-col size="4" class="status-item">
+            <ion-icon name="barbell-outline" color="primary"></ion-icon>
+            <p>Exercícios</p>
+            <h3>30 min</h3>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Seletor de Dias (Scroll Horizontal) -->
+  <div class="day-selector-container">
+    <ion-segment scrollable [(ngModel)]="selectedDay" mode="md" class="day-segment">
+      <ion-segment-button *ngFor="let day of weekDays" [value]="day.value">
+        <ion-label>{{ day.label }}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <!-- Resumo de Calorias -->
+  <ion-card class="summary-card">
+    <ion-card-header>
+      <ion-card-title>Resumo de Calorias</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row class="ion-align-items-center">
+          <ion-col size="4" class="summary-item">
+            <p>Consumidas</p>
+            <h3 class="highlight-green">350 kcal</h3>
+          </ion-col>
+          <ion-col size="4" class="summary-item main">
+            <p>Ainda Consumir</p>
+            <h2 class="highlight-sage">3964 kcal</h2>
+          </ion-col>
+          <ion-col size="4" class="summary-item">
+            <p>Exercícios</p>
+            <h3 class="highlight-green">30 min</h3>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Dieta do Dia -->
+  <ion-card class="diet-card">
+    <ion-card-header>
+      <ion-card-title>Dieta do Dia</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list lines="none">
+        <ion-item class="diet-item">
+          <ion-label>
+            <h3><strong>08:00</strong> - Café da manhã</h3>
+          </ion-label>
+        </ion-item>
+        <ion-item class="diet-item">
+          <ion-label>
+            <h3><strong>12:00</strong> - Almoço</h3>
+          </ion-label>
+        </ion-item>
+        <ion-item class="diet-item">
+          <ion-label>
+            <h3><strong>19:00</strong> - Jantar</h3>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+      
+      <ion-button expand="block" fill="outline" class="btn-more" (click)="goToNutriente()">
+        VER MAIS
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Navegação Rápida (Mantida do seu código, mas estilizada) -->
+  <div class="quick-actions">
+    <h3>Acesso Rápido</h3>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6">
+          <ion-card button class="action-card" (click)="goToExercicio()">
+            <ion-icon name="fitness-outline"></ion-icon>
+            <p>Ir para Treino</p>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-card button class="action-card" (click)="goToNutriente()">
+            <ion-icon name="nutrition-outline"></ion-icon>
+            <p>Ir para Alimentos</p>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  
+  <!-- Espaço extra para não ficar atrás do Tab Bar -->
+  <div class="bottom-spacer"></div>
+
+</ion-content>
