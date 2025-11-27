@@ -2,31 +2,15 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  {
-
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-  },
-  {
-    path: '',
-    redirectTo: 'home',
-=======
-    path: 'welcome',
-    loadChildren: () => import('./pages/welcome-page/welcome/welcome.module').then( m => m.WelcomePageModule)
-  },
+  // Rota padrão (Redireciona para welcome ao abrir o app)
   {
     path: '',
     redirectTo: 'welcome',
-
     pathMatch: 'full'
   },
   {
-    path: 'login',
-    loadChildren: () => import('./pages/login-page/login/login.module').then( m => m.LoginPageModule)
-  },
-  {
-    path: 'register',
-    loadChildren: () => import('./pages/register-page/register/register.module').then( m => m.RegisterPageModule)
+    path: 'welcome',
+    loadChildren: () => import('./pages/welcome-page/welcome/welcome.module').then( m => m.WelcomePageModule)
   },
   {
     path: 'splash-1',
@@ -45,16 +29,14 @@ const routes: Routes = [
     loadChildren: () => import('./pages/splash-page/splash-4/splash-4.module').then( m => m.Splash4PageModule)
   },
   {
-
-    path: 'welcome',
-    loadChildren: () => import('./pages/welcome-page/welcome/welcome.module').then( m => m.WelcomePageModule)
+    path: 'login',
+    loadChildren: () => import('./pages/login-page/login/login.module').then( m => m.LoginPageModule)
   },
   {
-    path: 'exercicio',
-    loadChildren: () => import('./pages/exercicio/exercicio.module').then( m => m.ExercicioPageModule)
+    path: 'register',
+    loadChildren: () => import('./pages/register-page/register/register.module').then( m => m.RegisterPageModule)
   },
-
-=======
+  {
     path: 'home',
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
   },
@@ -94,16 +76,6 @@ const routes: Routes = [
     path: 'refeicao',
     loadChildren: () => import('./refeicao/refeicao.module').then( m => m.RefeicaoPageModule)
   },
-
-
-
-
-
-  
-
-
-
-  
 ];
 
 @NgModule({

@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-toolbar>
-=======
+
   <ion-toolbar color="primary" class="header-center">
 
     <ion-title>Rotina de Treino</ion-title>
@@ -53,7 +53,7 @@
   <div class="section-header">
     <h2>O que você quer treinar</h2>
   </div>
-=======
+
 
 <ion-content>
 
@@ -110,7 +110,7 @@
 
   <ion-list *ngIf="videos.length > 0" lines="none">
     <ion-card *ngFor="let video of videos">
-=======
+
   <ion-list *ngIf="videos.length > 0" lines="none" class="video-list">
     <ion-card *ngFor="let video of videos" class="video-card">
 
@@ -189,7 +189,7 @@
     </ion-card-content>
   </ion-card>
 
-=======
+
   <div *ngIf="videos.length === 0" class="no-videos">
     <p>Nenhum vídeo disponível</p>
   </div>
