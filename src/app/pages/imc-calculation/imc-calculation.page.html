@@ -1,53 +1,71 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
     <ion-title>Cálculo de IMC</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
   <div class="content-container">
-    <h1>Calculadora de IMC</h1>
-    <p>
-      Com as suas informações abaixo vamos calcular o seu IMC e verificar o Peso ideal.
+    <h1 class="ion-text-center">Calculadora de IMC</h1>
+    <p class="ion-text-center ion-text-muted">
+      Confira os seus dados e calcule o seu índice de massa corporal.
     </p>
 
-    <!-- Dados do Usuário -->
-    <ion-item>
-      <ion-label>Peso (kg): <strong>{{ peso }}</strong></ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Altura (cm): <strong>{{ altura }}</strong></ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Idade: <strong>{{ idade }} anos</strong></ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Sexo: <strong>{{ sexo === 'male' ? 'Masculino' : 'Feminino' }}</strong></ion-label>
-    </ion-item>
+    <!-- Dados do Utilizador -->
+    <ion-list inset="true">
+      <ion-item>
+        <ion-label>Peso (kg)</ion-label>
+        <ion-note slot="end" color="dark"><strong>{{ peso }}</strong></ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>Altura (cm)</ion-label>
+        <ion-note slot="end" color="dark"><strong>{{ altura }}</strong></ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>Idade</ion-label>
+        <ion-note slot="end" color="dark"><strong>{{ idade }} anos</strong></ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>Sexo</ion-label>
+        <ion-note slot="end" color="dark"><strong>{{ sexo === 'male' ? 'Masculino' : 'Feminino' }}</strong></ion-note>
+      </ion-item>
+    </ion-list>
 
-    <!-- Peso Ideal -->
-    <ion-item>
-      <ion-label>Peso Ideal: <strong>{{ pesoIdeal | number:'1.0-2' }} kg</strong></ion-label>
-    </ion-item>
-
-    <!-- Resultado -->
-    <div class="resultado" *ngIf="resultadoIMC">
-      <h3>Resultado:</h3>
-      <!-- Classificação -->
-      <p>IMC: <span class="highlight">{{ resultadoIMC.imc | number: '1.1-1' }}</span></p>
-      <p class="classificacao {{ obterClassificacaoCor(resultadoIMC?.classificacao || 'classificacao-normal') }}">
-        Classificação: <span class="highlight">{{ resultadoIMC.classificacao }}</span>
-      </p>
-      <!-- Feedback -->
-      <p class="feedback {{ obterClasseFeedback(resultadoIMC?.classificacao || 'feedback-normal') }}">
-        {{ resultadoMensagem }}
-      </p>
+    <!-- Botão Calcular -->
+    <div class="ion-padding">
+      <ion-button expand="block" size="large" (click)="calcularIMC()">
+        Calcular IMC
+      </ion-button>
     </div>
 
-    <!-- Botão para calcular -->
-    <ion-button expand="full" (click)="calcularIMC()">Calcular IMC</ion-button>
+    <!-- Resultado -->
+    <ion-card *ngIf="resultadoIMC" class="ion-margin-top result-card">
+      <ion-card-header>
+        <ion-card-subtitle class="ion-text-center">O SEU RESULTADO</ion-card-subtitle>
+        <ion-card-title class="ion-text-center" style="font-size: 2.5rem; color: var(--ion-color-primary);">
+          {{ resultadoIMC.imc | number:'1.1-1' }}
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content class="ion-text-center">
+        <!-- Correção: Removido o '?' que causava warning -->
+        <ion-chip [class]="obterClassificacaoCor(resultadoIMC.classificacao || 'normal')">
+          <ion-label>{{ resultadoIMC.classificacao }}</ion-label>
+        </ion-chip>
+
+        <p class="ion-margin-top" [class]="obterClasseFeedback(resultadoIMC.classificacao || 'normal')">
+          {{ resultadoMensagem }}
+        </p>
+
+        <div class="ion-margin-top" style="border-top: 1px solid #ccc; padding-top: 10px;">
+          <p><small>Peso Ideal Estimado:</small></p>
+          <h3>{{ pesoIdeal | number:'1.0-2' }} kg</h3>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
   </div>
 </ion-content>
