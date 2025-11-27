@@ -141,10 +141,37 @@
           </ion-select>
         </ion-item>
 
-        <ion-item lines="none">
+        <!-- Ícone e Texto para Selecionar a Data -->
+        <ion-item lines="none" button (click)="openDatePicker()">
           <ion-icon slot="start" name="calendar-outline"></ion-icon>
-          <ion-datetime formControlName="dmy" placeholder="Data de Nascimento" display-format="DD/MM/YYYY"></ion-datetime>
+          <ion-label>
+            {{ selectedDate ? selectedDate : 'Selecionar Data' }}
+          </ion-label>
         </ion-item>
+
+        <!-- Modal para selecionar a data -->
+        <ion-modal [isOpen]="isDatePickerOpen" (didDismiss)="closeDatePicker()">
+          <ng-template>
+            <ion-content>
+              <ion-header>
+                <ion-toolbar>
+                  <ion-title>Selecione a Data</ion-title>
+                  <ion-buttons slot="end">
+                    <ion-button (click)="closeDatePicker()">Fechar</ion-button>
+                  </ion-buttons>
+                </ion-toolbar>
+              </ion-header>
+              <ion-datetime
+                (ionChange)="onDateSelected($event)"
+                [presentation]="'date'"
+                [value]="selectedDate"
+                placeholder="Data de Nascimento"
+                display-format="DD/MM/YYYY"
+              ></ion-datetime>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+
         
         <ion-item lines="none">
           <ion-icon slot="start" name="barbell-outline"></ion-icon>

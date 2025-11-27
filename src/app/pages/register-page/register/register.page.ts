@@ -12,6 +12,8 @@ export class RegisterPage {
   registerFormStep1: FormGroup;
   registerFormStep2: FormGroup;
   showPassword = false;
+  isDatePickerOpen = false;
+  selectedDate: string | null = null; // Armazena a data selecionada
 
   constructor(private fb: FormBuilder, private router: Router) {
     // Formulário da primeira etapa
@@ -51,7 +53,7 @@ export class RegisterPage {
       console.log('Dados Completos de Registro:', fullRegistrationData);
 
       // Redireciona para a página principal após o registro
-      this.router.navigate(['/home']);
+      this.router.navigate(['/login']);
     } else {
       console.log('Formulário da Etapa 2 é inválido');
     }
@@ -60,6 +62,21 @@ export class RegisterPage {
   // Função para alternar a visibilidade da senha
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
+  }
+
+  // Controle do modal de data
+  openDatePicker() {
+    this.isDatePickerOpen = true;
+  }
+
+  closeDatePicker() {
+    this.isDatePickerOpen = false;
+  }
+
+  onDateSelected(event: any) {
+    this.selectedDate = event.detail.value; // Pega a data selecionada
+    this.registerFormStep2.controls['dmy'].setValue(this.selectedDate);
+    this.closeDatePicker(); // Fecha o modal após a seleção
   }
 
   // Função auxiliar para determinar se os botões "Próximo" e "Registrar" devem estar habilitados
