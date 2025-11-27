@@ -3,7 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-<<<<<<< HEAD
+
     path: 'home',
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
   },
@@ -17,7 +17,7 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: 'welcome',
->>>>>>> final-V2
+
     pathMatch: 'full'
   },
   {
@@ -45,10 +45,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/splash-page/splash-4/splash-4.module').then( m => m.Splash4PageModule)
   },
   {
-<<<<<<< HEAD
+
     path: 'welcome',
     loadChildren: () => import('./pages/welcome-page/welcome/welcome.module').then( m => m.WelcomePageModule)
-  },  {
+  },
+  {
     path: 'exercicio',
     loadChildren: () => import('./pages/exercicio/exercicio.module').then( m => m.ExercicioPageModule)
   },
@@ -88,7 +89,8 @@ const routes: Routes = [
   {
     path: 'imc-calculation',
     loadChildren: () => import('./pages/imc-calculation/imc-calculation.module').then( m => m.ImcCalculationPageModule)
-  },  {
+  },
+  {
     path: 'refeicao',
     loadChildren: () => import('./refeicao/refeicao.module').then( m => m.RefeicaoPageModule)
   },
@@ -100,7 +102,7 @@ const routes: Routes = [
   
 
 
->>>>>>> final-V2
+
   
 ];
 

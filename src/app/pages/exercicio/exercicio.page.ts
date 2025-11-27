@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-<<<<<<< HEAD
+
 import { ExerciciosService } from '../../service/services/exercicios.service';
 
 @Component({
@@ -9,12 +9,12 @@ import { YoutubeService } from '../../service/services/youtube.service'; // Cert
 
 @Component({
   selector: 'app-exercicios',
->>>>>>> final-V2
+
   templateUrl: './exercicio.page.html',
   styleUrls: ['./exercicio.page.scss'],
 })
 export class ExerciciosPage implements OnInit {
-<<<<<<< HEAD
+
   exercises: any[] = []; // Alterar para o tipo correto se você tiver uma interface
   videos: any[] = []; // Adicione seus vídeos aqui, se necessário
 
@@ -50,5 +50,5 @@ export class ExerciciosPage implements OnInit {
       }
     );
   }
->>>>>>> final-V2
+
 }

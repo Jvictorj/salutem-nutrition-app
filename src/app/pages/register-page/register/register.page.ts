@@ -39,7 +39,7 @@ export class RegisterPage {
     });
   }
 
-<<<<<<< HEAD
+
   // Função para ir para o próximo passo
   goToNextStep() {
     if (this.registerFormStep1.valid) {
@@ -67,12 +67,12 @@ export class RegisterPage {
   
   // Função para alternar a visibilidade da senha
 =======
->>>>>>> final-V2
+
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
 
-<<<<<<< HEAD
+
   // Controle do modal de data
   openDatePicker() {
     this.isDatePickerOpen = true;
@@ -96,7 +96,7 @@ export class RegisterPage {
     if (this.registerFormStep1.valid) {
       this.currentStep = 2;
     }
->>>>>>> final-V2
+
   }
 
   async onRegister() {
