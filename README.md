@@ -38,7 +38,7 @@
 
 | Tela Principal | Informações Nutricionais (Resumo) | Informações Nutricionais (Alimentos) |
 |----------------|------------------------------------|----------------------------------------|
-| <img src="src/assets/Screenshots/Home.png" height="500" width="250"/> | <img src="src/assets/Screenshots/nutriente-track - (Resumo).png" height="500" width="250"/> | <img src="src/assets/Screenshots/nutriente-track - (Informações).png" height="500" width="250"/> |
+| <img src="src/assets/Screenshots/home.png" height="500" width="250"/> | <img src="src/assets/Screenshots/nutriente-track - (Resumo).png" height="500" width="250"/> | <img src="src/assets/Screenshots/nutriente-track - (Informações).png" height="500" width="250"/> |
 
 | Tela de Exercícios | IMC | Perfil |
 |--------------------|-----|--------|
