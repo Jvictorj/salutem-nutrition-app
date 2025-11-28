@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-splash-4',
@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./splash-4.page.scss'],
 })
 export class Splash4Page {
-  constructor() {}
+  nextRoute = '/register'
+
+  constructor() { }
+
 }

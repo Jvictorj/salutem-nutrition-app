@@ -12,16 +12,11 @@ export class SplashContentComponent {
   @Input() description!: string;
   @Input() imageSrc!: string;
   @Input() nextRoute!: string;
-  @Input() progress!: number;
-
 
   constructor(private router: Router) {}
 
   goToNext() {
-    if (this.nextRoute) {
-      this.router.navigate([this.nextRoute]);
-    } else {
-      this.router.navigate(['/login']); 
-    }
+    const route = this.nextRoute || '/login';
+    this.router.navigate([route]);
   }
 }

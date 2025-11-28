@@ -66,6 +66,21 @@ ion-footer {
   padding: 6px; // Cria a borda falsa ao redor do botão
 }
 
+ion-footer {
+  position: fixed !important;
+  bottom: 0 !important;
+  width: 100%;
+  z-index: 9999;
+}
+
+.custom-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 999;
+}
+
+
 .fab-button {
   --background: #{$sage-green};
   --color: white;

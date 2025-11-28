@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./splash-2.page.scss'],
 })
 export class Splash2Page {
-  constructor() {}
+  nextRoute = '/splash-3';
+
+
+  constructor() { }
+
 }
