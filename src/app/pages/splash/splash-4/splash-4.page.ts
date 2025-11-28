@@ -1,3 +1,6 @@
+
+import { Component, OnInit } from '@angular/core';
+
 import { Component } from '@angular/core';
 
 @Component({
@@ -6,5 +9,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./splash-4.page.scss'],
 })
 export class Splash4Page {
+
+  nextRoute = '/register'
+
+  constructor() { }
+
+}
+
   constructor() {}
 }
+

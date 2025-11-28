@@ -1,4 +1,17 @@
 <ion-app>
+
+
+  <!-- Onde todas as páginas são carregadas -->
+  <ion-router-outlet id="main-content"></ion-router-outlet>
+
+  <!-- Menu Inferior -->
+  <ion-footer  *ngIf="showMenu" class="ion-no-border custom-footer">
+    <ion-toolbar class="tab-bar">
+      
+      <!-- Lado Esquerdo -->
+      <ion-buttons slot="start">
+        <ion-button routerLink="/home" class="tab-btn">
+
   <!-- O router-outlet é onde todas as páginas (Login, Home, Perfil) aparecem -->
   <ion-router-outlet id="main-content"></ion-router-outlet>
 
@@ -9,13 +22,18 @@
       <!-- Home -->
       <ion-buttons slot="start">
         <ion-button routerLink="/home" routerDirection="root" class="tab-btn">
+
           <div class="btn-content">
             <ion-icon name="home-outline"></ion-icon>
             <label>Home</label>
           </div>
         </ion-button>
 
+
+        <ion-button routerLink="/refeicao" class="tab-btn">
+
         <ion-button routerLink="/refeicao" routerDirection="root" class="tab-btn">
+
           <div class="btn-content">
             <ion-icon name="restaurant-outline"></ion-icon>
             <label>Refeição</label>
@@ -23,7 +41,11 @@
         </ion-button>
       </ion-buttons>
 
+
+      <!-- Botão Central -->
+
       <!-- Botão Central (ADD) - Destaque -->
+
       <div class="fab-wrapper">
         <ion-button class="fab-button" (click)="onAdd()">
           <ion-icon name="add"></ion-icon>
@@ -32,14 +54,22 @@
 
       <!-- Lado Direito -->
       <ion-buttons slot="end">
+
+        <ion-button routerLink="/nutriente-track" class="tab-btn">
+
         <ion-button routerLink="/nutriente-track" routerDirection="root" class="tab-btn">
+
           <div class="btn-content">
             <ion-icon name="nutrition-outline"></ion-icon>
             <label>Nutrientes</label>
           </div>
         </ion-button>
 
+
+        <ion-button routerLink="/exercicio" class="tab-btn">
+
         <ion-button routerLink="/exercicio" routerDirection="root" class="tab-btn">
+
           <div class="btn-content">
             <ion-icon name="barbell-outline"></ion-icon>
             <label>Treino</label>
@@ -49,4 +79,5 @@
 
     </ion-toolbar>
   </ion-footer>
+
 </ion-app>
