@@ -1,4 +1,8 @@
+
 import { Component} from '@angular/core';
+
+import { Component } from '@angular/core';
+
 
 @Component({
   selector: 'app-splash-1',
@@ -6,6 +10,9 @@ import { Component} from '@angular/core';
   styleUrls: ['./splash-1.page.scss'],
 })
 export class Splash1Page {
+
   nextRoute = '/splash-2';
+
+
   constructor() {}
 }

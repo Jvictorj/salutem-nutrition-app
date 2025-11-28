@@ -34,15 +34,15 @@
 
 | Boas-Vindas | Registro | Login |
 |------------|----------|-------|
-| <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/welcome.png?raw=true" height="500" width="250"/> | <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/register.png?raw=true" height="500" width="250"/> | <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/login.png?raw=true" height="500" width="250"/> |
+| <img src="src/assets/Screenshots/welcome.png" height="500" width="250"/> | <img src="src/assets/Screenshots/register.png" height="500" width="250"/> | <img src="src/assets/Screenshots/login.png" height="500" width="250"/> |
 
 | Tela Principal | Informações Nutricionais (Resumo) | Informações Nutricionais (Alimentos) |
 |----------------|------------------------------------|----------------------------------------|
-| <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/Home.png?raw=true" height="500" width="250"/> | <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/nutriente-track%20-%20(Resumo).png?raw=true" height="500" width="250"/> | <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/nutriente-track%20-%20(Informações).png?raw=true" height="500" width="250"/> |
+| <img src="src/assets/Screenshots/home.png" height="500" width="250"/> | <img src="src/assets/Screenshots/nutriente-track - (Resumo).png" height="500" width="250"/> | <img src="src/assets/Screenshots/nutriente-track - (Informações).png" height="500" width="250"/> |
 
 | Tela de Exercícios | IMC | Perfil |
 |--------------------|-----|--------|
-| <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/page-exercicio.png?raw=true" height="500" width="250"/> | <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/IMC.png?raw=true" height="500" width="250"/> | <img src="https://github.com/Jvictorj/SALUTEM/blob/master/src/assets/Sscreenshots/Perfil.png?raw=true" height="500" width="250"/> |
+| <img src="src/assets/Screenshots/page-exercicio.png" height="500" width="250"/> | <img src="src/assets/Screenshots/IMC.png" height="500" width="250"/> | <img src="src/assets/Screenshots/Perfil.png" height="500" width="250"/> |
 
 ## 🎯 Objetivos do Projeto
 
