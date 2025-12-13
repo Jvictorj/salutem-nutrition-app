@@ -1,0 +1,47 @@
+.tab-bar {
+  --background: var(--ion-color-secondary);
+  height: 70px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  box-shadow: 0 -4px 20px rgba(0,0,0,.05);
+  z-index: 10; /* Keep tab bar above content but not blocking clicks */
+}
+
+.tab-btn {
+  --color: #666; /* Cor dos ícones */
+  --background: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+
+  ion-icon {
+    font-size: 1.4rem;
+  }
+
+  ion-label {
+    font-size: 0.65rem;
+    font-weight: 500;
+    text-transform: none; /* Sem caixa alta */
+  }
+
+  /* Estilo ativo: ion-tab-button adiciona aria-selected="true" quando ativo */
+  &:is([aria-selected="true"]) {
+    --color: var(--ion-color-primary); /* Cor dos ícones quando selecionado */
+  }
+}
+
+/* Ensure tabs layout doesn't block child content and router outlet grows properly */
+ion-tabs {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+
+
+/* Keep tab-bar interactive and not blocking clicks on content behind it */
+ion-tab-bar {
+  pointer-events: auto;
+}
