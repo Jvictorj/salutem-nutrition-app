@@ -93,6 +93,7 @@ export class AuthService {
   async logout(): Promise<void> {
     await this.afAuth.signOut();
   }
+  
 
   async sendPasswordReset(email: string): Promise<void> {
     try {

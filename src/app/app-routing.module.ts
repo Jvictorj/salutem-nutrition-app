@@ -58,7 +58,7 @@ const routes: Routes = [
       import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
 
-  // 🔹 Outras rotas dentro da área logada
+  // 🔹 Outras rotas dentro da área logada (uso direto / fallback)
   {
     path: 'home',
     loadChildren: () =>

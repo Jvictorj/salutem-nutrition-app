@@ -14,6 +14,3 @@ export class Splash2Page {
 
 }
 
-  constructor() {}
-}
-

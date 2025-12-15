@@ -8,37 +8,45 @@ import { Router } from '@angular/router';
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
 })
+
 export class RegisterPage {
   currentStep = 1;
   registerFormStep1: FormGroup;
   registerFormStep2: FormGroup;
   showPassword = false;
   
+  
   // Variáveis para a data
   selectedDateDisplay: string | null = null; // O que aparece para o usuário (DD/MM/YYYY)
+   maxBirthDate!: string;
 
   constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router
-  ) {
-    // Formulário Passo 1: Acesso
-    this.registerFormStep1 = this.fb.group({
-      fullName: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      acceptTerms: [false, Validators.requiredTrue],
-    });
+  private fb: FormBuilder,
+  private authService: AuthService,
+  private router: Router
+) {
+  // Limite de idade mínima (13 anos)
+  const today = new Date();
+  today.setFullYear(today.getFullYear() - 13);
+  this.maxBirthDate = today.toISOString();
 
-    // Formulário Passo 2: Perfil
-    this.registerFormStep2 = this.fb.group({
-      gender: ['', Validators.required],
-      birthDate: ['', Validators.required], // Data em formato ISO para o banco
-      weight: ['', [Validators.required, Validators.min(1)]],
-      height: ['', [Validators.required, Validators.min(1)]],
-    });
-  }
+  // Formulário Passo 1
+  this.registerFormStep1 = this.fb.group({
+    fullName: ['', Validators.required],
+    phoneNumber: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
+    acceptTerms: [false, Validators.requiredTrue],
+  });
+
+  // Formulário Passo 2
+  this.registerFormStep2 = this.fb.group({
+    gender: ['', Validators.required],
+    birthDate: ['', Validators.required],
+    weight: ['', [Validators.required, Validators.min(1)]],
+    height: ['', [Validators.required, Validators.min(1)]],
+  });
+}
 
   // Alternar visibilidade da senha
   togglePasswordVisibility() {

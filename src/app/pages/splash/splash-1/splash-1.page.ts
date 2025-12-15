@@ -1,9 +1,6 @@
 
 import { Component} from '@angular/core';
 
-import { Component } from '@angular/core';
-
-
 @Component({
   selector: 'app-splash-1',
   templateUrl: './splash-1.page.html',

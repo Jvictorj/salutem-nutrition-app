@@ -172,3 +172,32 @@ ion-datetime {
   --background: #fff;
   --accent-color: #A7B59B; // Verde do tema
 }
+
+.date-label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  .label-floating {
+    font-size: 0.75rem;
+    color: var(--ion-color-medium);
+  }
+
+  .date-value {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+    margin-top: 2px;
+  }
+}
+
+ion-datetime {
+  --accent-color: #A7B59B;
+  border-radius: 16px;
+}
+
+ion-datetime {
+  --accent-color: #A7B59B;
+  --wheel-highlight-background: rgba(167, 181, 155, 0.15);
+  border-radius: 16px;
+}

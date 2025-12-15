@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'; 
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,30 +7,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./splash-content.component.scss'],
 })
 export class SplashContentComponent {
-  
+
   @Input() title!: string;
   @Input() description!: string;
   @Input() imageSrc!: string;
   @Input() nextRoute!: string;
 
-
-  @Input() progress!: number;
-
-
   constructor(private router: Router) {}
 
-  goToNext() {
-
-    const route = this.nextRoute || '/login';
-    this.router.navigate([route]);
-  }
-}
-
+  goNext() {
     if (this.nextRoute) {
-      this.router.navigate([this.nextRoute]);
-    } else {
-      this.router.navigate(['/login']); 
+      this.router.navigateByUrl(this.nextRoute);
     }
   }
 }
-
