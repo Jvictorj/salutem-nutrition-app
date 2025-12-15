@@ -1,26 +1,52 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title class="toolbar" color="secondary">Refeição</ion-title>
+    <ion-title color="light">Refeição</ion-title>
   </ion-toolbar>
+
+  <!-- Seletor de Refeição -->
+  <ion-segment
+    [(ngModel)]="refeicaoSelecionada"
+    (ionChange)="trocarRefeicao(refeicaoSelecionada)"
+    mode="ios"
+  >
+    <ion-segment-button value="Café da Manhã">
+      <ion-label>Café</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Almoço">
+      <ion-label>Almoço</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Jantar">
+      <ion-label>Jantar</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Lanche">
+      <ion-label>Lanche</ion-label>
+    </ion-segment-button>
+  </ion-segment>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item *ngFor="let alimento of alimentos">
+
+  <ion-list *ngIf="alimentos.length > 0">
+    <ion-item *ngFor="let alimento of alimentos; let i = index">
       <ion-label>
         <h2>{{ alimento.description }}</h2>
         <p>{{ alimento.quantity }} {{ alimento.unit }}</p>
-        <p>Calorias: {{ alimento.energy_kcal | number:'1.0-2' }} kcal</p>
-        <p>Proteínas: {{ alimento.protein_g | number:'1.0-2' }} g</p>
-        <p>Carboidratos: {{ alimento.carbohydrate_g | number:'1.0-2' }} g</p>
-        <p>Gorduras: {{ alimento.lipid_g | number:'1.0-2' }} g</p>
-        <p>Fibras: {{ alimento.fiber_g | number:'1.0-2' }} g</p>
+        <p>{{ alimento.energy_kcal | number:'1.0-0' }} kcal</p>
       </ion-label>
+
+      <ion-button
+        slot="end"
+        fill="clear"
+        color="danger"
+        (click)="remover(i)"
+      >
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-button>
     </ion-item>
   </ion-list>
 
-  <!-- Exibir se não houver alimentos na refeição -->
   <div *ngIf="alimentos.length === 0" class="no-results">
-    <p>Nenhum alimento adicionado à refeição ainda.</p>
+    <p>Nenhum alimento adicionado.</p>
   </div>
+
 </ion-content>
