@@ -98,7 +98,7 @@ export class RegisterPage {
         await this.authService.register(userData, step1.password);
 
         console.log('Registro completo!');
-        this.router.navigate(['/home']);
+        this.router.navigate(['/tabs/home']);
         
       } catch (error: any) {
         // Agora o error.message virá em Português traduzido pelo serviço!
