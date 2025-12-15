@@ -68,15 +68,15 @@ export class HomePage implements OnInit {
   }
 
   goToProfile() {
-    this.router.navigate(['/profile']);
+    this.router.navigate(['/tabs/profile']);
   }
 
   goToExercicio() {
-    this.router.navigate(['/exercicio']);
+    this.router.navigate(['/tabs/exercicio']);
   }
 
   goToNutriente() {
-    this.router.navigate(['/nutriente-track']);
+    this.router.navigate(['/tabs/nutriente-track']);
   }
 
   // Mantive a lógica de upload caso queira usar no futuro (no perfil, por exemplo)
