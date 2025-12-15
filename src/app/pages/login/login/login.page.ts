@@ -31,7 +31,7 @@ export class LoginPage {
       this.errorMessage = ''; // Limpa erros anteriores
       await this.authService.login(this.email, this.senha);
       console.log('Login bem-sucedido!');
-      this.router.navigate(['/home']);
+      this.router.navigate(['/tabs']);
     } catch (error: any) {
       // Tratamento de mensagens de erro amigáveis
       if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
