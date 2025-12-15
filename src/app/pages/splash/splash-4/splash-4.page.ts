@@ -1,8 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
 
-import { Component } from '@angular/core';
-
 @Component({
   selector: 'app-splash-4',
   templateUrl: './splash-4.page.html',
@@ -14,8 +12,5 @@ export class Splash4Page {
 
   constructor() { }
 
-}
-
-  constructor() {}
 }
 

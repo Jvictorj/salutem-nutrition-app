@@ -14,6 +14,4 @@ export class Splash3Page {
 
 }
 
-  constructor() {}
-}
 
