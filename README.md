@@ -2,7 +2,7 @@
 
 **Salutem** é um aplicativo mobile desenvolvido com o framework **Ionic**, voltado para o gerenciamento de dietas e rotinas de exercícios. O objetivo é auxiliar os usuários a adotarem hábitos de vida mais saudáveis, fornecendo planos alimentares personalizados, sugestões de treino e rastreamento de nutrientes, com base na **Tabela Brasileira de Composição de Alimentos (TACO)**.
 
-#👉 **Acesse o app:** https://salutem-app-fitness.web.app/welcome
+# 👉 **Acesse o app:** https://salutem-app-fitness.web.app/welcome
 
 ## 🧩 Funcionalidades
 
