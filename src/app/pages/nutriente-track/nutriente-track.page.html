@@ -1,10 +1,17 @@
 <ion-header class="ion-no-border">
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home" color="light"></ion-back-button>
+      <ion-back-button defaultHref="/tabs/home" color="light"></ion-back-button>
     </ion-buttons>
     <ion-title color="light">Informações Nutricionais</ion-title>
   </ion-toolbar>
+
+  <ion-spinner
+    *ngIf="isLoading"
+    name="crescent"
+    class="loading-spinner">
+  </ion-spinner>
+
 
   <!-- Painel Fixo de Resumo Rápido (Header) -->
   <div class="header-summary">

@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NutrienteService } from '../../services/api/nutriente.service';
 import { RefeicaoService } from '../../services/user/refeicao.service';
+import { AlertController, ToastController } from '@ionic/angular';
+import { TipoRefeicao } from '../../services/user/refeicao.service';
+import { Subscription } from 'rxjs';
 
 interface DailySummary {
   caloriesConsumed: number;
@@ -18,16 +21,17 @@ interface DailySummary {
   templateUrl: './nutriente-track.page.html',
   styleUrls: ['./nutriente-track.page.scss'],
 })
-export class NutrienteTrackPage implements OnInit {
-  // Controle de Visualização
-  viewMode: string = 'resumo';
-  
-  // Dados de Pesquisa
-  searchQuery: string = '';
-  alimentos: any[] = [];
+export class NutrienteTrackPage implements OnInit, OnDestroy {
+
+  // UI
+  viewMode: 'resumo' | 'buscar' = 'resumo';
+  isLoading = false;
+
+  // Busca
+  searchQuery = '';
   filteredAlimentos: any[] = [];
 
-  // Objeto vazio no início
+  // Resumo diário
   dailySummary: DailySummary = {
     caloriesConsumed: 0,
     caloriesGoal: 0,
@@ -36,70 +40,125 @@ export class NutrienteTrackPage implements OnInit {
     proteinConsumed: 0,
     proteinGoal: 0,
     fatConsumed: 0,
-    fatGoal: 0
+    fatGoal: 0,
   };
+
+  private sub!: Subscription;
 
   constructor(
     private nutrienteService: NutrienteService,
-    private refeicaoService: RefeicaoService
+    private refeicaoService: RefeicaoService,
+    private alertCtrl: AlertController,
+    private toastCtrl: ToastController,  // Add ToastController to constructor
   ) {}
 
   ngOnInit() {
-    // Carrega os dados iniciais ao abrir a página
     this.loadDailyData();
+
+    this.sub = this.refeicaoService.refeicoes$.subscribe(() => {
+      this.updateResumo();
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 
   loadDailyData() {
-    // Simula uma busca no banco de dados
-    this.dailySummary = {
-      caloriesConsumed: 1450,
-      caloriesGoal: 2000,
-      carbsConsumed: 150,
-      carbsGoal: 250,
-      proteinConsumed: 75,
-      proteinGoal: 100,
-      fatConsumed: 45,
-      fatGoal: 65
-    };
+    this.dailySummary.caloriesGoal = 2000;
+    this.dailySummary.carbsGoal = 250;
+    this.dailySummary.proteinGoal = 100;
+    this.dailySummary.fatGoal = 65;
+
+    this.updateResumo(); // calcula o consumido real
   }
 
-  // --- Lógica de Busca ---
-
+  // 🔎 BUSCA
   onSearch() {
-    if (this.searchQuery.trim() === '') {
+    if (this.searchQuery.trim().length < 3) {
       this.filteredAlimentos = [];
       return;
     }
 
-    this.nutrienteService.getAlimentoByName(this.searchQuery).subscribe(
-      (result) => {
+    this.isLoading = true;
+
+    this.nutrienteService.getAlimentoByName(this.searchQuery).subscribe({
+      next: (result) => {
         this.filteredAlimentos = result.map((alimento: any) => ({
           ...alimento,
           quantity: 100,
           unit: this.getUnitForCategory(alimento.category),
-          // Salva valores originais
           energy_kcal_original: alimento.energy_kcal,
           protein_g_original: alimento.protein_g,
           carbohydrate_g_original: alimento.carbohydrate_g,
           lipid_g_original: alimento.lipid_g,
           fiber_g_original: alimento.fiber_g,
         }));
+        this.isLoading = false;
       },
-      (error) => {
-        console.error('Erro na busca:', error);
-      }
-    );
+      error: () => {
+        this.isLoading = false;
+      },
+    });
   }
 
-  // --- Lógica de Adição ---
+  // ➕ ADICIONAR
+  async addToMeal(alimento: any) {
+    const alert = await this.alertCtrl.create({
+      header: 'Adicionar alimento',
+      message: 'Escolha a refeição',
+      inputs: [
+        {
+          type: 'radio',
+          label: 'Café da Manhã',
+          value: 'Café da Manhã',
+          checked: true
+        },
+        {
+          type: 'radio',
+          label: 'Almoço',
+          value: 'Almoço'
+        },
+        {
+          type: 'radio',
+          label: 'Jantar',
+          value: 'Jantar'
+        },
+        {
+          type: 'radio',
+          label: 'Lanche',
+          value: 'Lanche'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Adicionar',
+          handler: (refeicao: TipoRefeicao) => {
+            if (alimento.quantity <= 0) {
+              this.showToast('Por favor, insira uma quantidade válida');
+              return false; 
+            }
 
-  addToMeal(alimento: any) {
-    const nomeRefeicao = 'Lanche';
-    this.refeicaoService.addAlimento(nomeRefeicao, alimento);
-    console.log(`Adicionado: ${alimento.description}`);
-    this.viewMode = 'resumo';
+            this.refeicaoService.addAlimento(refeicao, { ...alimento });
+            this.showToast('Alimento adicionado com sucesso');
+
+            return true;
+          }
+
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
+  // 🔄 ATUALIZA NUTRIENTES
   updateNutritionalValues(alimento: any) {
     if (!alimento.quantity || alimento.quantity <= 0) return;
 
@@ -111,16 +170,31 @@ export class NutrienteTrackPage implements OnInit {
     alimento.fiber_g = alimento.fiber_g_original * factor;
   }
 
-  // --- Utilitários ---
-
+  // 🧠 UTIL
   getUnitForCategory(category: string): string {
     const liquids = ['Leite e derivados', 'Bebidas (alcoólicas e não alcoólicas)'];
     return liquids.includes(category) ? 'ml' : 'g';
   }
 
   getProgress(consumed: number, goal: number): number {
-    if (goal === 0) return 0;
-    const progress = consumed / goal;
-    return progress > 1 ? 1 : progress;
+    return goal === 0 ? 0 : Math.min(consumed / goal, 1);
+  }
+
+  updateResumo() {
+    const resumo = this.refeicaoService.getResumoDiario();
+
+    this.dailySummary.caloriesConsumed = resumo.calories;
+    this.dailySummary.carbsConsumed = resumo.carbs;
+    this.dailySummary.proteinConsumed = resumo.protein;
+    this.dailySummary.fatConsumed = resumo.fat;
+  }
+
+  async showToast(message: string) {
+    const toast = await this.toastCtrl.create({
+      message: message,
+      duration: 2000,
+      position: 'bottom',
+    });
+    toast.present();
   }
 }
