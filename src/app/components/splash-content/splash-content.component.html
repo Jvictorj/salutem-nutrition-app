@@ -11,11 +11,11 @@
     </div>
 
     <div class="text-content">
-      <h1>{{ title }}</h1>
+      <h1 [innerHTML]="title"></h1>
       <p>{{ description }}</p>
     </div>
 
-    <ion-button class="next-button" (click)="goToNext()">
+    <ion-button class="next-button" (click)="goNext()">
       <ion-icon name="chevron-forward-outline"></ion-icon>
     </ion-button>
 
