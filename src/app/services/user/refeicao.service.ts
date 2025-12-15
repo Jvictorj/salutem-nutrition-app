@@ -1,47 +1,65 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
+export type TipoRefeicao =
+  | 'Café da Manhã'
+  | 'Almoço'
+  | 'Jantar'
+  | 'Lanche';
+
 @Injectable({
   providedIn: 'root',
 })
 export class RefeicaoService {
-  
-  // Estado inicial das refeições
-  private refeicoesSubject = new BehaviorSubject<any>({
+
+  private refeicoesSubject = new BehaviorSubject<Record<TipoRefeicao, any[]>>({
     'Café da Manhã': [],
     'Almoço': [],
     'Jantar': [],
-    'Lanche': []
+    'Lanche': [],
   });
 
-  // O mundo externo só vê o Observable (apenas leitura)
-  public refeicoes$ = this.refeicoesSubject.asObservable();
+  refeicoes$ = this.refeicoesSubject.asObservable();
 
-  constructor() {}
+  addAlimento(refeicao: TipoRefeicao, alimento: any) {
+    const atual = this.refeicoesSubject.value;
 
-  addAlimento(nomeRefeicao: string, alimento: any) {
-    const valorAtual = this.refeicoesSubject.value;
-    
-    if (!valorAtual[nomeRefeicao]) {
-      valorAtual[nomeRefeicao] = [];
-    }
+    atual[refeicao] = [...atual[refeicao], alimento];
 
-    // Adiciona o novo item
-    valorAtual[nomeRefeicao].push(alimento);
-
-    // Emite o novo valor para todo o app
-    this.refeicoesSubject.next({ ...valorAtual });
-    
-    console.log(`Refeição atualizada:`, valorAtual);
+    this.refeicoesSubject.next({ ...atual });
   }
 
-  // Retorna todas as refeições de uma vez
-  getRefeicoesAtuais() {
-    return this.refeicoesSubject.value;
+  removerAlimento(refeicao: TipoRefeicao, index: number) {
+    const atual = this.refeicoesSubject.value;
+
+    atual[refeicao].splice(index, 1);
+    this.refeicoesSubject.next({ ...atual });
   }
 
-  // CORREÇÃO: Método adicionado para compatibilidade com seu código antigo
-  getAlimentos(nomeRefeicao: string) {
-    return this.refeicoesSubject.value[nomeRefeicao] || [];
+  getAlimentos(refeicao: TipoRefeicao): any[] {
+    return this.refeicoesSubject.value[refeicao];
   }
+
+  getResumoDiario() {
+  const refeicoes = this.refeicoesSubject.value;
+
+  let total = {
+    calories: 0,
+    carbs: 0,
+    protein: 0,
+    fat: 0
+  };
+
+  Object.values(refeicoes).forEach((lista: any[]) => {
+    lista.forEach(alimento => {
+      total.calories += alimento.energy_kcal || 0;
+      total.carbs += alimento.carbohydrate_g || 0;
+      total.protein += alimento.protein_g || 0;
+      total.fat += alimento.lipid_g || 0;
+    });
+  });
+
+  return total;
+}
+
 }
