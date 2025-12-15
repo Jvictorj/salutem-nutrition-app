@@ -78,6 +78,7 @@ Thumbs.db
 .firebaserc
 firebase.json
 cors.json
+.firebase/
 
 # Ionic/Angular environments
 src/environments/environment.ts
